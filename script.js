@@ -1,4 +1,4 @@
-// données factices
+// données factices avec thumbnail pour test
 const orders = [
   {
     number: '5442315',
@@ -7,9 +7,10 @@ const orders = [
     invoiceUrl: '#',
     trackingUrl: '#',
     status: 'delivered',
+    thumbnail: 'https://via.placeholder.com/200x200?text=Preview+3D',
     configs: [
       { id:'CFG-001', qty:16, techno:'Multi Jet Fusion', material:'TPU 90A-01', finish:'Normale', delay:'Standard', unitPrice:8.36, totalPrice:133.76 },
-      { id:'CFG-002', qty:5,  techno:'FDM', material:'PLA',       finish:'Brut',    delay:'Eco',      unitPrice:12.00,totalPrice:60.00   }
+      { id:'CFG-002', qty:5,  techno:'FDM',              material:'PLA',       finish:'Brut',    delay:'Eco',      unitPrice:12.00, totalPrice:60.00   }
     ]
   },
   {
@@ -19,6 +20,7 @@ const orders = [
     invoiceUrl: '#',
     trackingUrl: '#',
     status: 'shipped',
+    thumbnail: 'https://via.placeholder.com/200x200?text=Preview+3D',
     configs: [
       { id:'CFG-004', qty:2, techno:'FDM', material:'PLA', finish:'Brut', delay:'Fast', unitPrice:33.00, totalPrice:66.00 }
     ]
@@ -26,7 +28,7 @@ const orders = [
 ];
 const steps = ['validated','preparation','production','shipped','delivered'];
 
-// au chargement, on affiche la LISTE et on injecte les lignes
+// on injecte la liste
 window.addEventListener('DOMContentLoaded', () => {
   const tbody = document.getElementById('ordersTableBody');
   orders.forEach((o,i) => {
@@ -39,12 +41,10 @@ window.addEventListener('DOMContentLoaded', () => {
       <td class="actions">
         <a href="#" data-index="${i}">Commander à nouveau</a>
       </td>`;
-    // clic ligne → détail
     tr.addEventListener('click', () => showDetail(i));
     tbody.appendChild(tr);
   });
 
-  // clic sur "Retour aux commandes"
   document.getElementById('backToList')
           .addEventListener('click', e => {
     e.preventDefault();
@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// affiche le détail, masque la liste
+// affiche le détail
 function showDetail(i) {
   const o = orders[i];
   toggleView('detail');
@@ -63,14 +63,18 @@ function showDetail(i) {
   document.getElementById('invoiceLink').href               = o.invoiceUrl;
   document.getElementById('trackingLink').href              = o.trackingUrl;
 
-  // met à jour les pastilles
+  // miniature
+  document.getElementById('orderThumbnail').src = o.thumbnail;
+
+  // statut
   document.querySelectorAll('.step').forEach(el => {
-    el.classList.toggle('completed',
+    el.classList.toggle(
+      'completed',
       steps.indexOf(el.dataset.step) <= steps.indexOf(o.status)
     );
   });
 
-  // injecte le contenu
+  // contenu
   const cfg = document.getElementById('configLinesBody');
   cfg.innerHTML = '';
   o.configs.forEach(c => {
@@ -83,7 +87,7 @@ function showDetail(i) {
   });
 }
 
-// bascule l'affichage
+// toggle liste / détail
 function toggleView(view) {
   document.getElementById('orders-list')
           .classList.toggle('hidden', view==='detail');
