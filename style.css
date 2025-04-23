@@ -1,179 +1,127 @@
-/* style-commandes.css */
-
-/* En-tête / retour */
+/* style.css spécifique à /commandes/ */
+:root {
+  --orange: #FFA500;
+  --grey-light: #EEEEEE;
+  --grey-med:   #CCCCCC;
+  --grey-dark:  #333333;
+  --blue:       #0057E7;
+  --white:      #FFFFFF;
+  --bg:         #F9F9F9;
+}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+}
 .cmd-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px;
-  background: var(--white);
+  display: flex; align-items: center; gap: 16px;
+  background: var(--white); padding: 20px;
 }
 .cmd-header h1 {
-  font-size: 24px;
-  color: var(--grey-dark);
-  margin: 0;
+  font-size: 24px; color: var(--grey-dark); margin: 0;
 }
 .btn-back {
-  text-decoration: none;
-  color: var(--orange);
-  font-weight: 600;
+  text-decoration: none; color: var(--orange); font-weight: 600;
 }
-
-/* Conteneur principal */
 .cmd-main {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto 40px;
+  width: 90%; max-width: 1200px; margin: 0 auto 40px;
 }
 
-/* LISTE DES COMMANDES */
+/* Liste */
 .orders-list {
-  overflow-x: auto;
   background: var(--white);
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow-x: auto;
 }
 .orders-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
+  width: 100%; border-collapse: collapse; font-size: 14px;
 }
-.orders-table thead th {
-  background: var(--grey-light);
-  padding: 12px;
-  text-align: left;
-  font-weight: 500;
+.orders-table th {
+  background: var(--grey-light); padding: 12px; text-align: left;
   color: var(--grey-dark);
-}
-.orders-table tbody tr {
-  transition: background .2s;
-}
-.orders-table tbody tr:nth-child(even) {
-  background: var(--grey-light);
-}
-.orders-table tbody tr:hover {
-  background: var(--bg);
 }
 .orders-table td {
-  padding: 12px;
-  vertical-align: middle;
+  padding: 12px; vertical-align: middle;
+  border-bottom: 1px solid var(--grey-med);
 }
-.orders-table .status-label {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background: var(--orange);
-  color: var(--white);
+.orders-table tr:nth-child(even) {
+  background: var(--grey-light);
+}
+.orders-table tr:hover {
+  background: var(--bg);
+}
+.status-label {
+  display: inline-block; padding: 4px 8px;
+  background: var(--orange); color: var(--white); border-radius: 4px;
   font-size: 13px;
 }
-.orders-table .actions {
-  display: flex;
-  gap: 12px;
-}
-.orders-table .actions a {
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.orders-table .actions a .material-icons {
-  font-size: 16px;
+.actions { display: flex; gap: 12px; }
+.actions a {
+  display: flex; align-items: center; gap: 4px;
+  text-decoration: none; color: var(--blue); font-size: 13px;
 }
 
-/* Bouton "Toutes les commandes" */
+/* Toutes les commandes */
 .all-orders-btn {
-  margin: 12px 0;
-  text-align: right;
+  text-align: right; margin: 12px 0;
 }
 .all-orders-btn a {
-  display: inline-block;
-  background: var(--blue);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
+  background: var(--blue); color: #fff;
+  padding: 10px 20px; border-radius: 4px;
+  text-decoration: none; font-weight: 600;
 }
 
-/* DÉTAIL D’UNE COMMANDE */
+/* Détail */
 .hidden { display: none !important; }
 .order-detail {
-  background: var(--white);
-  border-radius: 8px;
+  background: var(--white); border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 24px;
-  margin-top: 24px;
+  padding: 24px; margin-top: 24px;
 }
 .order-detail h2 {
-  margin-top: 0;
-  font-size: 22px;
-  color: var(--grey-dark);
+  font-size: 22px; color: var(--grey-dark); margin-top: 0;
 }
-
-/* Métadonnées */
 .order-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-bottom: 24px;
+  display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 24px;
 }
-.order-meta div {
-  font-size: 14px;
-  color: var(--grey-dark);
-}
-.order-meta a {
-  color: var(--orange);
-  text-decoration: none;
-}
-.order-meta a:hover {
-  text-decoration: underline;
-}
+.order-meta div { font-size: 14px; color: var(--grey-dark); }
+.order-meta a { color: var(--orange); text-decoration: none; }
+.order-meta a:hover { text-decoration: underline; }
 
-/* Suivi de production */
+/* Suivi production */
 .order-status {
-  display: flex;
-  gap: 8px;
-  margin: 24px 0;
+  display: flex; gap: 8px; margin: 24px 0;
 }
 .step {
-  flex: 1;
-  text-align: center;
-  padding: 8px 4px;
-  font-size: 13px;
-  color: var(--grey-dark);
+  flex: 1; text-align: center; padding: 8px 4px;
+  font-size: 13px; color: var(--grey-dark);
   border-top: 4px solid var(--grey-med);
   border-radius: 4px 4px 0 0;
   background: var(--grey-light);
   transition: all .3s;
 }
 .step.completed {
-  background: var(--orange);
-  color: #fff;
+  background: var(--orange); color: #fff;
   border-top-color: var(--orange);
 }
 
-/* Tableau de lignes */
+/* Lignes de configuration */
 .config-lines {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
+  width: 100%; border-collapse: collapse; font-size: 14px;
   margin-top: 16px;
 }
 .config-lines th {
-  background: var(--grey-light);
-  padding: 8px;
-  text-align: center;
+  background: var(--grey-light); padding: 8px; text-align: center;
   font-weight: 500;
 }
 .config-lines td {
-  padding: 8px;
-  border: 1px solid var(--grey-med);
+  padding: 8px; border: 1px solid var(--grey-med);
   text-align: center;
 }
 
-/* Responsive basique */
+/* Responsive */
 @media (max-width: 768px) {
   .order-meta { flex-direction: column; }
   .orders-table, .config-lines { font-size: 12px; }
