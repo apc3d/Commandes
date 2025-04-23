@@ -10,83 +10,42 @@
 <body>
 
   <header class="cmd-header">
-    <a href="../index.html" class="btn-back">← Retour au dashboard</a>
-    <h1>Commandes récentes et en cours</h1>
+    <a href="../index.html" class="btn-back">← Retour aux commandes</a>
+    <h2>Commande <span id="detailOrderNumber"></span></h2>
   </header>
 
   <main class="cmd-main">
 
-    <!-- LISTE DES COMMANDES -->
-    <section id="orders-list" class="orders-list">
-      <table class="orders-table">
-        <thead>
-          <tr>
-            <th>Numéro</th>
-            <th>Date</th>
-            <th>Prix</th>
-            <th>État</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="ordersTableBody">
-          <!-- injecté par script.js -->
-        </tbody>
-      </table>
-    </section>
+    <!-- INFOS PRINCIPALES -->
+    <div class="order-meta">
+      <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
+      <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
+      <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
+      <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
+    </div>
 
-    <!-- DÉTAIL (caché par défaut) -->
-    <section id="order-detail" class="order-detail hidden">
-      <button id="backToList" class="btn-back">← Retour aux commandes</button>
-      <h2>Commande <span id="detailOrderNumber"></span></h2>
+    <!-- BARRE DE STATUT -->
+    <div class="order-status">
+      <div class="step" data-step="validated">Validée</div>
+      <div class="step" data-step="preparation">Préparation</div>
+      <div class="step" data-step="production">Fabrication</div>
+      <div class="step" data-step="shipped">Expédiée</div>
+      <div class="step" data-step="delivered">Livrée</div>
+    </div>
 
-      <div class="order-status">
-        <div class="step" data-step="validated">Validée</div>
-        <div class="step" data-step="preparation">Préparation</div>
-        <div class="step" data-step="production">Fabrication</div>
-        <div class="step" data-step="shipped">Expédiée</div>
-        <div class="step" data-step="delivered">Livrée</div>
-      </div>
-
-      <h3>Contenu de la commande</h3>
-      <table class="config-lines">
-        <thead>
-          <tr>
-            <th>Réf</th><th>Qté</th><th>Techno</th><th>Matériau</th>
-            <th>Finition</th><th>Délais</th><th>Prix U. (€)</th><th>Total (€)</th>
-          </tr>
-        </thead>
-        <tbody id="configLinesBody">
-          <!-- injecté par script.js -->
-        </tbody>
-      </table>
-
-      <!-- Récapitulatif tarifaire -->
-      <div class="price-summary">
-        <div class="total-only">
-          <strong>Montant total de la commande (HT) : </strong>
-          <span id="sumTotal"></span> €
-        </div>
-        <div class="vat-note">
-          TVA 20 % en sus
-        </div>
-      </div>
-
-      <!-- Adresse + paiement (en colonnes) -->
-      <div class="order-info-bottom">
-        <div class="info-col">
-          <h4>Adresse de livraison</h4>
-          <p id="detailShipping"></p>
-        </div>
-        <div class="info-col">
-          <h4>Adresse de facturation</h4>
-          <p id="detailBilling"></p>
-        </div>
-        <div class="info-col">
-          <h4>Mode de paiement</h4>
-          <p id="detailPayment"></p>
-        </div>
-      </div>
-    </section>
+    <!-- CONTENU DE LA COMMANDE -->
+    <h3>Contenu de la commande</h3>
+    <table class="config-lines">
+      <thead>
+        <tr>
+          <th>Réf</th><th>Qté</th><th>Techno</th><th>Matériau</th>
+          <th>Finition</th><th>Délais</th><th>Prix U. (€)</th><th>Total (€)</th>
+        </tr>
+      </thead>
+      <tbody id="configLinesBody">
+        <!-- injecté par script.js -->
+      </tbody>
+    </table>
 
   </main>
 
