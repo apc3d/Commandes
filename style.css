@@ -13,97 +13,34 @@ body {
   background:var(--bg);
 }
 .cmd-header {
-  display:flex; align-items:center; gap:16px;
-  background:var(--white); padding:20px;
+  display:flex; align-items:center; gap:12px;
+  background:var(--white); padding:16px 20px;
 }
 .cmd-header h1 {
-  font-size:24px; color:var(--grey-dark);
-  margin:0;
+  font-size:20px; color:var(--grey-dark); margin:0;
 }
 .btn-back {
   color:var(--orange); text-decoration:none; font-weight:600;
 }
 .cmd-main {
-  width:90%; max-width:1200px; margin:20px auto 40px;
+  width:90%; max-width:1000px; margin:20px auto 40px;
 }
 
-/* === LISTE DES COMMANDES === */
-.orders-list {
-  background:var(--white);
-  border-radius:8px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
-  overflow-x:auto;
-}
-.orders-table {
-  width:100%; border-collapse:collapse; font-size:14px;
-}
-.orders-table th {
-  background:var(--grey-light); padding:12px; text-align:left;
-  color:var(--grey-dark);
-}
-.orders-table td {
-  padding:12px; vertical-align:middle;
-  border-bottom:1px solid var(--grey-med);
-}
-.orders-table tr:nth-child(even) {
-  background:var(--grey-light);
-}
-.orders-table tr {
-  cursor:pointer;
-  transition:background .2s;
-}
-.orders-table tr:hover {
-  background:rgba(255,165,0,0.1);
-}
-.status-label {
-  display:inline-block; padding:4px 8px;
-  background:var(--orange); color:var(--white);
-  border-radius:4px; font-size:13px;
-}
-/* lien unique pour relancer */
-.orders-table .actions {
-  text-align:right;
-}
-.orders-table .actions a {
-  color:var(--blue); text-decoration:none; font-size:13px;
-}
-.orders-table .actions a:hover {
-  text-decoration:underline;
-}
-
-/* === DÉTAIL DE COMMANDE === */
-.hidden { display:none!important; }
-.order-detail {
-  background:var(--white); border-radius:8px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
-  padding:24px; margin-top:24px;
-}
-.order-detail h2 {
-  font-size:22px; color:var(--grey-dark);
-  margin:12px 0 24px;
-}
-
-/* infos principales */
+/* métadonnées */
 .order-meta {
-  display:flex; gap:24px; flex-wrap:wrap;
-  margin-bottom:24px;
+  display:flex; flex-wrap:wrap; gap:24px;
+  margin-bottom:16px;
 }
-.order-meta div {
-  font-size:14px; color:var(--grey-dark);
-}
-.order-meta a {
-  color:var(--orange); text-decoration:none;
-}
-.order-meta a:hover {
-  text-decoration:underline;
-}
+.order-meta div { font-size:14px; color:var(--grey-dark); }
+.order-meta a { color:var(--orange); text-decoration:none; }
+.order-meta a:hover { text-decoration:underline; }
 
 /* statut */
 .order-status {
   display:flex; gap:8px; margin-bottom:24px;
 }
 .step {
-  flex:1; text-align:center; padding:8px;
+  flex:1; text-align:center; padding:8px 4px;
   font-size:13px; color:var(--grey-dark);
   background:var(--grey-light);
   border-top:4px solid var(--grey-med);
@@ -115,26 +52,45 @@ body {
   border-top-color:var(--orange);
 }
 
-/* miniature 3D */
-.order-image {
-  text-align:center; margin-bottom:16px;
+/* mini-config */
+.config-items {
+  display:flex; flex-direction:column; gap:16px;
 }
-.order-image img {
-  max-width:200px;
-  border:1px solid var(--grey-med);
-  border-radius:4px;
+.mini-config {
+  display:grid;
+  grid-template-columns: 120px 1fr 1fr; /* image / settings / extras */
+  gap:12px;
+  background:var(--white); padding:16px;
+  border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+.mini-config .preview {
+  display:flex; flex-direction:column; align-items:center;
+}
+.mini-config .preview img {
+  width:100%; max-width:120px; border:1px solid var(--grey-med);
+  border-radius:4px; margin-bottom:8px;
+}
+.mini-config .preview .dims {
+  font-size:12px; color:var(--grey-dark); text-align:center;
+  line-height:1.4;
 }
 
-/* tableau des configs */
-.config-lines {
-  width:100%; border-collapse:collapse; font-size:14px;
-  margin-bottom:0;
+/* settings */
+.mini-config .settings {
+  display:flex; flex-direction:column; gap:8px;
 }
-.config-lines th {
-  background:var(--grey-light); padding:8px; text-align:center;
-  font-weight:500;
+.mini-config .settings div {
+  font-size:14px; color:var(--grey-dark);
 }
-.config-lines td {
-  padding:8px; border:1px solid var(--grey-med);
-  text-align:center;
+.mini-config .settings .label { font-weight:600; margin-bottom:4px; }
+.mini-config .settings .value { margin-left:4px; }
+
+/* extras (quantité & délai) */
+.mini-config .extras {
+  display:flex; flex-direction:column; justify-content:space-between;
 }
+.mini-config .extras .qty,
+.mini-config .extras .delay {
+  font-size:14px; color:var(--grey-dark);
+}
+.mini-config .extras .label { font-weight:600; }
