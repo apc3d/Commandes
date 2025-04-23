@@ -7,168 +7,156 @@
   --white:      #FFFFFF;
   --bg:         #F9F9F9;
 }
-
-/* reset / body */
-* { box-sizing: border-box; margin:0; padding:0 }
+* { box-sizing:border-box; margin:0; padding:0 }
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--bg);
+  font-family:'Segoe UI',sans-serif;
+  background:var(--bg);
 }
 
 /* header */
 .cmd-header {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--white); padding: 16px 20px;
+  display:flex; align-items:center; gap:12px;
+  background:var(--white); padding:16px 20px;
 }
 .cmd-header h1 {
-  font-size: 20px; color: var(--grey-dark); margin: 0;
+  font-size:20px; color:var(--grey-dark);
 }
 .btn-back {
-  color: var(--orange);
-  text-decoration: none;
-  font-weight: 600;
+  color:var(--orange); text-decoration:none; font-weight:600;
 }
 
-/* main */
+/* main : full-width désormais */
 .cmd-main {
-  width: 90%; max-width: 1000px;
+  width: 100%;            /* occupe toute la largeur */
+  max-width: none;        /* plus de limite fixe */
   margin: 20px auto 40px;
+  padding: 0 20px;        /* un petit padding horizontal */
 }
 
-/* meta-infos */
+/* meta */
 .order-meta {
-  display: flex; flex-wrap: wrap;
-  gap: 24px; margin-bottom: 16px;
+  display:flex; flex-wrap:wrap; gap:24px; margin-bottom:16px;
 }
-.order-meta div {
-  font-size: 14px; color: var(--grey-dark);
-}
-.order-meta a {
-  color: var(--orange);
-  text-decoration: none;
-}
-.order-meta a:hover {
-  text-decoration: underline;
-}
+.order-meta div { font-size:14px; color:var(--grey-dark); }
+.order-meta a { color:var(--orange); text-decoration:none; }
+.order-meta a:hover { text-decoration:underline; }
 
 /* statut */
 .order-status {
-  display: flex; gap: 8px;
-  margin-bottom: 24px;
+  display:flex; gap:8px; margin-bottom:24px;
 }
 .step {
-  flex: 1; text-align: center;
-  padding: 8px 4px;
-  font-size: 13px;
-  color: var(--grey-dark);
-  background: var(--grey-light);
-  border-top: 4px solid var(--grey-med);
-  border-radius: 4px 4px 0 0;
-  transition: all .3s;
+  flex:1; text-align:center; padding:8px 4px;
+  font-size:13px; color:var(--grey-dark);
+  background:var(--grey-light);
+  border-top:4px solid var(--grey-med);
+  border-radius:4px 4px 0 0;
+  transition:all .3s;
 }
 .step.completed {
-  background: var(--orange);
-  color: #fff;
-  border-top-color: var(--orange);
+  background:var(--orange); color:#fff;
+  border-top-color:var(--orange);
 }
 
 /* liste de configs */
 .config-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display:flex; flex-direction:column; gap:16px;
 }
 
-/* chaque panneau */
+/* panneau config */
 .panel {
-  display: grid;
+  display:grid;
   grid-template-columns: 160px 1fr 1fr 1fr;
-  gap: 12px;
-  background: var(--white);
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  gap:12px;
+  background:var(--white);
+  padding:16px;
+  border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* colonne 1 : preview */
+/* Aperçu */
 .preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display:flex; flex-direction:column; align-items:center;
 }
 .preview img {
-  width: 120px; height: 120px;
-  object-fit: contain;
-  border: 1px solid var(--grey-med);
-  border-radius: 4px;
-  margin-bottom: 8px;
+  width:120px; height:120px; object-fit:contain;
+  border:1px solid var(--grey-med); border-radius:4px;
+  margin-bottom:8px;
 }
 .preview .ref {
-  font-size: 14px; font-weight: 600;
-  margin-bottom: 6px;
+  font-size:14px; font-weight:600; margin-bottom:4px;
 }
-.dims {
-  font-size: 12px; color: var(--grey-dark);
-  text-align: center; line-height: 1.4;
+.preview .dims {
+  font-size:12px; color:var(--grey-dark);
+  text-align:center; line-height:1.4;
 }
 
-/* colonne 2 : settings */
+/* settings */
 .settings {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display:flex; flex-direction:column; gap:12px;
 }
 .field {
-  display: flex;
-  flex-direction: column;
+  display:flex; flex-direction:column;
 }
 .field .label {
-  font-size: 13px; margin-bottom: 4px;
-  font-weight: 600;
+  font-size:13px; margin-bottom:4px; font-weight:600;
 }
-.field .value {
-  font-size: 14px; color: var(--grey-dark);
+.field .value-box {
+  padding:6px 8px;
+  border:1px solid var(--grey-med);
+  border-radius:4px;
+  background:var(--white);
+  font-size:14px; color:var(--grey-dark);
 }
 
-/* colonne 3 : inserts + délai */
+/* extras */
 .extras {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display:flex; flex-direction:column; justify-content:space-between;
 }
-.slider-container {
-  display: flex; align-items: center; gap: 8px;
+.inserts {
+  display:flex; flex-direction:column; gap:4px;
 }
-input[type="range"] {
-  flex: 1;
+.inserts .label {
+  font-size:13px; font-weight:600;
 }
-.extras .delay {
-  font-size: 14px; color: var(--grey-dark);
+.inserts .value-box {
+  display:inline-block;
+  padding:6px 10px;
+  border:1px solid var(--grey-med);
+  border-radius:4px;
+  background:var(--white);
+  width:50px; text-align:center;
 }
-.extras .delay .label {
-  font-weight: 600;
+.delay {
+  font-size:14px; color:var(--grey-dark);
+}
+.delay .label {
+  font-weight:600;
+}
+.checks {
+  display:flex; flex-direction:column; gap:6px;
+}
+.checks label {
+  font-size:13px; color:var(--grey-dark);
+}
+.checks input {
+  margin-right:6px;
 }
 
-/* colonne 4 : résumé quantité/prix */
+/* summary */
 .summary {
-  background: var(--grey-light);
-  padding: 8px;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  background:var(--grey-light);
+  padding:8px; border-radius:4px;
+  display:flex; flex-direction:column; gap:8px;
 }
-.current {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 4px;
-  text-align: center;
-  font-size: 13px;
+.summary .field {
+  display:flex; justify-content:space-between; align-items:center;
 }
-.current .field-label { align-self: center; }
-.current .field-value {
-  background: var(--orange);
-  color: var(--white);
-  padding: 4px 0;
-  border-radius: 2px;
+.summary .field-label {
+  font-size:13px; color:var(--grey-dark);
+}
+.summary .field-value {
+  background:var(--orange); color:#fff;
+  padding:4px 8px; border-radius:2px;
+  font-size:14px; min-width:60px; text-align:center;
 }
