@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mes commandes – APC3D</title>
-  <!-- ton style global + nouveau style commandes -->
+  <!-- Styles globaux si besoin -->
+  <link rel="stylesheet" href="../style.css">
+  <!-- Styles commandes -->
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style-commandes.css">
 </head>
 <body>
 
-  <!-- En-tête avec lien retour -->
   <header class="cmd-header">
-    <a href="index.html" class="btn-back">← Retour au dashboard</a>
+    <a href="../index.html" class="btn-back">← Retour au dashboard</a>
     <h1>Commandes récentes et en cours</h1>
   </header>
 
   <main class="cmd-main">
-
-    <!-- LISTE DES COMMANDES -->
+    <!-- LISTE -->
     <section id="orders-list" class="orders-list">
       <table class="orders-table">
         <thead>
@@ -31,22 +30,20 @@
           </tr>
         </thead>
         <tbody id="ordersTableBody">
-          <!-- Rempli par commandes.js -->
+          <!-- <script.js> injecte ici les lignes -->
         </tbody>
       </table>
     </section>
 
-    <!-- BOUTON TOUTES LES COMMANDES (si tu veux paginer) -->
     <div class="all-orders-btn">
-      <a href="commandes.html">Toutes les commandes →</a>
+      <a href="index.html">Toutes les commandes →</a>
     </div>
 
-    <!-- DÉTAIL D’UNE COMMANDE -->
+    <!-- DÉTAIL (caché jusqu'à clic) -->
     <section id="order-detail" class="order-detail hidden">
       <button id="backToList" class="btn-back">← Retour aux commandes</button>
       <h2>Commande <span id="detailOrderNumber"></span></h2>
 
-      <!-- Info haut -->
       <div class="order-meta">
         <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
         <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
@@ -54,7 +51,6 @@
         <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
       </div>
 
-      <!-- Suivi de production -->
       <div class="order-status">
         <div class="step" data-step="validated">Validée</div>
         <div class="step" data-step="preparation">Préparation</div>
@@ -63,29 +59,21 @@
         <div class="step" data-step="delivered">Livrée</div>
       </div>
 
-      <!-- Tableau des lignes de config -->
       <h3>Contenu de la commande</h3>
       <table class="config-lines">
         <thead>
           <tr>
-            <th>Réf</th>
-            <th>Qté</th>
-            <th>Techno</th>
-            <th>Matériau</th>
-            <th>Finition</th>
-            <th>Délais</th>
-            <th>Prix U. (€)</th>
-            <th>Total (€)</th>
+            <th>Réf</th><th>Qté</th><th>Techno</th><th>Matériau</th>
+            <th>Finition</th><th>Délais</th><th>Prix U. (€)</th><th>Total (€)</th>
           </tr>
         </thead>
         <tbody id="configLinesBody">
-          <!-- Rempli dynamiquement -->
+          <!-- <script.js> injecte ici -->
         </tbody>
       </table>
     </section>
-
   </main>
 
-  <script src="commandes.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
