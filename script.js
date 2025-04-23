@@ -1,43 +1,52 @@
-// ========== Données factices ==========
+// script.js: données factices + bascule liste ↔ détail
+
 const orders = [
   {
     number: '5442315',
     date: '18/03/2025',
     deliveryDate: '25/03/2025',
-    shippingAddress: 'APC3D SARL, ZA Les Grèzes, 12260 Villeneuve, France',
-    billingAddress: 'APC3D SARL, 12 Rue du Print, 12260 Villeneuve, France',
-    paymentMethod: 'Carte Bancaire',
     invoiceUrl: '#',
     trackingUrl: '#',
     status: 'delivered',
     total: 136.38,
-    details: { piecesPrice:133.76, discount:-13.38, shippingCost:16.00, vat:27.28 },
     configs: [
-      { id:'CFG-001', qty:16, techno:'Multi Jet Fusion', material:'TPU 90A-01', finish:'Normale', delay:'Standard', unitPrice:8.36, totalPrice:133.76 },
-      { id:'CFG-002', qty:5,  techno:'FDM', material:'PLA', finish:'Brut',    delay:'Eco',      unitPrice:12.00, totalPrice:60.00   },
-      { id:'CFG-003', qty:2,  techno:'SLA', material:'Résine', finish:'Poli',   delay:'Fast',     unitPrice:45.00, totalPrice:90.00   }
+      {
+        id: 'CFG-001',
+        qty: 16,
+        techno: 'Multi Jet Fusion',
+        material: 'Ultrastint TPU 90A-01',
+        finish: 'Normale',
+        delay: 'Standard',
+        unitPrice: 8.36,
+        totalPrice: 133.76
+      }
     ]
   },
   {
     number: '5364724',
     date: '28/11/2024',
     deliveryDate: '05/12/2024',
-    shippingAddress: 'APC3D, 1 Avenue Démo, 75000 Paris',
-    billingAddress: 'APC3D, 1 Avenue Démo, 75000 Paris',
-    paymentMethod: 'PayPal',
     invoiceUrl: '#',
     trackingUrl: '#',
     status: 'shipped',
     total: 66.00,
-    details: { piecesPrice:66.00, discount:0, shippingCost:0, vat:13.20 },
     configs: [
-      { id:'CFG-004', qty:2, techno:'FDM', material:'PLA', finish:'Brut', delay:'Fast', unitPrice:33.00, totalPrice:66.00 }
+      {
+        id: 'CFG-002',
+        qty: 2,
+        techno: 'FDM',
+        material: 'PLA',
+        finish: 'Brut',
+        delay: 'Fast',
+        unitPrice: 33.00,
+        totalPrice: 66.00
+      }
     ]
   }
 ];
+
 const steps = ['validated','preparation','production','shipped','delivered'];
 
-// ========== Initialisation ==========
 window.addEventListener('DOMContentLoaded', () => {
   const tbody = document.getElementById('ordersTableBody');
   orders.forEach((o,i) => {
@@ -56,64 +65,47 @@ window.addEventListener('DOMContentLoaded', () => {
     tbody.appendChild(tr);
   });
 
-  // bouton retour
   document.getElementById('backToList').addEventListener('click', e => {
     e.preventDefault();
-    toggleView('list');
+    document.getElementById('order-detail').classList.add('hidden');
+    document.getElementById('orders-list').classList.remove('hidden');
+    document.querySelector('.all-orders-btn').classList.remove('hidden');
   });
 });
 
-// ========== Affichage du détail inline ==========
 function showDetail(i) {
   const o = orders[i];
-  // masque la liste, affiche le détail
-  toggleView('detail');
+  document.getElementById('orders-list').classList.add('hidden');
+  document.querySelector('.all-orders-btn').classList.add('hidden');
+  const d = document.getElementById('order-detail');
+  d.classList.remove('hidden');
 
-  // injecte les méta-infos
-  document.getElementById('detailOrderNumber').textContent  = o.number;
-  document.getElementById('detailOrderDate').textContent    = o.date;
-  document.getElementById('detailDeliveryDate').textContent = o.deliveryDate;
-  document.getElementById('detailShipping').textContent     = o.shippingAddress;
-  document.getElementById('detailBilling').textContent      = o.billingAddress;
-  document.getElementById('detailPayment').textContent      = o.paymentMethod;
-  document.getElementById('invoiceLink').href               = o.invoiceUrl;
-  document.getElementById('trackingLink').href              = o.trackingUrl;
+  document.getElementById('detailOrderNumber').textContent = o.number;
+  document.getElementById('detailOrderDate').textContent   = o.date;
+  document.getElementById('detailDeliveryDate').textContent= o.deliveryDate;
+  document.getElementById('invoiceLink').href              = o.invoiceUrl;
+  document.getElementById('trackingLink').href             = o.trackingUrl;
 
-  // met à jour la barre de statut
   document.querySelectorAll('.step').forEach(el => {
-    el.classList.toggle('completed', steps.indexOf(el.dataset.step) <= steps.indexOf(o.status));
+    el.classList.remove('completed');
+    if (steps.indexOf(el.dataset.step) <= steps.indexOf(o.status)) {
+      el.classList.add('completed');
+    }
   });
 
-  // lignes de configuration
-  const cfgBody = document.getElementById('configLinesBody');
-  cfgBody.innerHTML = '';
-  o.configs.forEach(c => {
-    cfgBody.insertAdjacentHTML('beforeend', `
-      <tr>
-        <td>${c.id}</td>
-        <td>${c.qty}</td>
-        <td>${c.techno}</td>
-        <td>${c.material}</td>
-        <td>${c.finish}</td>
-        <td>${c.delay}</td>
-        <td>${c.unitPrice.toFixed(2)}</td>
-        <td>${c.totalPrice.toFixed(2)}</td>
-      </tr>
-    `);
+  const body = document.getElementById('configLinesBody');
+  body.innerHTML = '';
+  o.configs.forEach(cfg => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${cfg.id}</td><td>${cfg.qty}</td>
+      <td>${cfg.techno}</td><td>${cfg.material}</td>
+      <td>${cfg.finish}</td><td>${cfg.delay}</td>
+      <td>${cfg.unitPrice.toFixed(2)}</td>
+      <td>${cfg.totalPrice.toFixed(2)}</td>
+    `;
+    body.appendChild(tr);
   });
-
-  // récapitulatif tarifaire
-  document.getElementById('sumPieces').textContent   = o.details.piecesPrice.toFixed(2);
-  document.getElementById('sumDiscount').textContent = o.details.discount.toFixed(2);
-  document.getElementById('sumShipping').textContent = o.details.shippingCost.toFixed(2);
-  document.getElementById('sumVat').textContent      = o.details.vat.toFixed(2);
-  document.getElementById('sumTotal').textContent    = o.total.toFixed(2);
-}
-
-// bascule affichage liste ↔ détail
-function toggleView(view) {
-  document.getElementById('orders-list').classList.toggle('hidden', view === 'detail');
-  document.getElementById('order-detail').classList.toggle('hidden', view !== 'detail');
 }
 
 function label(s) {
