@@ -7,156 +7,177 @@
   --white:      #FFFFFF;
   --bg:         #F9F9F9;
 }
-* { box-sizing:border-box; margin:0; padding:0 }
+
+* { box-sizing:border-box; margin:0; padding:0; }
 body {
   font-family:'Segoe UI',sans-serif;
+  font-size:14px;
+  color:var(--grey-dark);
   background:var(--bg);
+  padding:20px;
 }
 
-/* header */
-.cmd-header {
-  display:flex; align-items:center; gap:12px;
-  background:var(--white); padding:16px 20px;
+/* Onglets */
+.tabs {
+  list-style:none;
+  display:flex;
+  gap:4px;
+  margin-bottom:20px;
 }
-.cmd-header h1 {
-  font-size:20px; color:var(--grey-dark);
-}
-.btn-back {
-  color:var(--orange); text-decoration:none; font-weight:600;
-}
-
-/* main : full-width désormais */
-.cmd-main {
-  width: 100%;            /* occupe toute la largeur */
-  max-width: none;        /* plus de limite fixe */
-  margin: 20px auto 40px;
-  padding: 0 20px;        /* un petit padding horizontal */
-}
-
-/* meta */
-.order-meta {
-  display:flex; flex-wrap:wrap; gap:24px; margin-bottom:16px;
-}
-.order-meta div { font-size:14px; color:var(--grey-dark); }
-.order-meta a { color:var(--orange); text-decoration:none; }
-.order-meta a:hover { text-decoration:underline; }
-
-/* statut */
-.order-status {
-  display:flex; gap:8px; margin-bottom:24px;
-}
-.step {
-  flex:1; text-align:center; padding:8px 4px;
-  font-size:13px; color:var(--grey-dark);
+.tab {
+  flex:1;
+  text-align:center;
+  padding:12px 0;
   background:var(--grey-light);
-  border-top:4px solid var(--grey-med);
-  border-radius:4px 4px 0 0;
-  transition:all .3s;
+  color:var(--grey-dark);
+  border-radius:4px;
+  font-weight:500;
+  pointer-events:none;
 }
-.step.completed {
-  background:var(--orange); color:#fff;
-  border-top-color:var(--orange);
-}
-
-/* liste de configs */
-.config-list {
-  display:flex; flex-direction:column; gap:16px;
+.tab.active {
+  background:var(--orange);
+  color:var(--white);
 }
 
-/* panneau config */
+/* Panel wrapper */
+.panel-wrapper {
+  background:var(--white);
+  border-radius:4px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  padding:16px;
+  margin-bottom:24px;
+}
+
+/* 4 colonnes */
 .panel {
   display:grid;
-  grid-template-columns: 160px 1fr 1fr 1fr;
-  gap:12px;
-  background:var(--white);
-  padding:16px;
-  border-radius:8px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  grid-template-columns:160px 1fr 1fr 1fr;
+  gap:16px;
 }
 
-/* Aperçu */
-.preview {
-  display:flex; flex-direction:column; align-items:center;
-}
-.preview img {
-  width:120px; height:120px; object-fit:contain;
-  border:1px solid var(--grey-med); border-radius:4px;
+/* Col 1 : Aperçu */
+.preview .box {
+  width:160px; height:160px;
+  background:#f0f0f0;
+  border:1px solid var(--grey-med);
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   margin-bottom:8px;
 }
-.preview .ref {
-  font-size:14px; font-weight:600; margin-bottom:4px;
-}
 .preview .dims {
-  font-size:12px; color:var(--grey-dark);
-  text-align:center; line-height:1.4;
+  font-size:12px;
+  line-height:1.4;
+  color:var(--grey-dark);
+  text-align:center;
+}
+.preview input[type=file] {
+  margin-top:8px;
 }
 
-/* settings */
+/* Col 2 : Sélections */
 .settings {
-  display:flex; flex-direction:column; gap:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
-.field {
-  display:flex; flex-direction:column;
+.field label {
+  font-size:13px;
+  margin-bottom:4px;
 }
-.field .label {
-  font-size:13px; margin-bottom:4px; font-weight:600;
-}
-.field .value-box {
-  padding:6px 8px;
+.field select {
+  width:100%;
+  padding:6px;
   border:1px solid var(--grey-med);
   border-radius:4px;
-  background:var(--white);
-  font-size:14px; color:var(--grey-dark);
 }
 
-/* extras */
+/* Col 3 : Extras */
 .extras {
-  display:flex; flex-direction:column; justify-content:space-between;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
-.inserts {
-  display:flex; flex-direction:column; gap:4px;
+#insertsRange {
+  width:100%;
+  margin-bottom:4px;
 }
-.inserts .label {
-  font-size:13px; font-weight:600;
+#insertsCount {
+  text-align:right;
+  font-size:13px;
+  color:var(--grey-dark);
 }
-.inserts .value-box {
-  display:inline-block;
-  padding:6px 10px;
+.delivery .opts {
+  display:flex;
+  gap:4px;
+  margin-top:4px;
+}
+.opt {
+  flex:1;
+  padding:8px 4px;
   border:1px solid var(--grey-med);
-  border-radius:4px;
-  background:var(--white);
-  width:50px; text-align:center;
+  border-radius:2px;
+  text-align:center;
+  cursor:pointer;
+  font-size:13px;
 }
-.delay {
-  font-size:14px; color:var(--grey-dark);
-}
-.delay .label {
-  font-weight:600;
-}
-.checks {
-  display:flex; flex-direction:column; gap:6px;
+.opt.active {
+  background:var(--orange);
+  color:var(--white);
+  border-color:var(--orange);
 }
 .checks label {
-  font-size:13px; color:var(--grey-dark);
-}
-.checks input {
-  margin-right:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
 }
 
-/* summary */
+/* Col 4 : Récap (fond blanc) */
 .summary {
-  background:var(--grey-light);
-  padding:8px; border-radius:4px;
-  display:flex; flex-direction:column; gap:8px;
+  background:var(--white);
+  padding:8px;
+  border-radius:4px;
+  border:1px solid var(--grey-light);
 }
-.summary .field {
-  display:flex; justify-content:space-between; align-items:center;
+.summary-header {
+  display:flex;
+  gap:12px;
+  margin-bottom:12px;
+  align-items:flex-end;
 }
-.summary .field-label {
-  font-size:13px; color:var(--grey-dark);
+.summary-header .field {
+  flex:1;
+  display:flex;
+  flex-direction:column;
 }
-.summary .field-value {
-  background:var(--orange); color:#fff;
-  padding:4px 8px; border-radius:2px;
-  font-size:14px; min-width:60px; text-align:center;
+.summary-header label {
+  font-size:13px;
+  margin-bottom:4px;
+}
+.summary-header input[type=number] {
+  width:100%;
+  padding:4px;
+  border:1px solid var(--grey-med);
+  border-radius:2px;
+  text-align:center;
+}
+.field-value {
+  padding:4px;
+  border:1px solid var(--grey-med);
+  border-radius:2px;
+  text-align:center;
+  background:var(--white);
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+table th,
+table td {
+  border:1px solid var(--grey-med);
+  padding:4px;
+  text-align:center;
 }
