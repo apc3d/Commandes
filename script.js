@@ -1,4 +1,4 @@
-// ====== Données factices ======
+// ===== Données factices =====
 const orders = [
   {
     number: '5442315',
@@ -37,7 +37,7 @@ const orders = [
 ];
 const steps = ['validated','preparation','production','shipped','delivered'];
 
-// ====== Initialisation ======
+// ===== Initialisation =====
 window.addEventListener('DOMContentLoaded', () => {
   const tbody = document.getElementById('ordersTableBody');
   orders.forEach((o,i) => {
@@ -48,19 +48,30 @@ window.addEventListener('DOMContentLoaded', () => {
       <td>${o.total.toFixed(2)} €</td>
       <td><span class="status-label">${label(o.status)}</span></td>
       <td class="actions">
-        <a href="#" onclick="showDetail(${i});return false;">Commander à nouveau</a>
+        <a href="#" data-index="${i}" class="reorder-link">Commander à nouveau</a>
       </td>`;
+    // clic sur la ligne pour voir le détail
+    tr.addEventListener('click', () => showDetail(i));
     tbody.appendChild(tr);
   });
 
-  // retour de la vue détail vers la liste
+  // empêcher le lien "Commander à nouveau" de déclencher le détail
+  document.querySelectorAll('.reorder-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.stopPropagation();
+      // ici tu peux lancer ta fonction de re-commande
+      alert(`Relance de la commande ${e.currentTarget.dataset.index}`);
+    });
+  });
+
+  // bouton retour
   document.getElementById('backToList').addEventListener('click', e => {
     e.preventDefault();
     toggleView('list');
   });
 });
 
-// ====== Affichage du détail inline ======
+// ===== Affichage du détail inline =====
 function showDetail(i) {
   const o = orders[i];
   toggleView('detail');
@@ -71,12 +82,12 @@ function showDetail(i) {
   document.getElementById('detailShipping').textContent     = o.shippingAddress;
   document.getElementById('detailBilling').textContent      = o.billingAddress;
   document.getElementById('detailPayment').textContent      = o.paymentMethod;
-  document.getElementById('invoiceLink').href               = o.invoiceUrl;
-  document.getElementById('trackingLink').href              = o.trackingUrl;
 
   // statut
   document.querySelectorAll('.step').forEach(el => {
-    el.classList.toggle('completed', steps.indexOf(el.dataset.step) <= steps.indexOf(o.status));
+    el.classList.toggle('completed',
+      steps.indexOf(el.dataset.step) <= steps.indexOf(o.status)
+    );
   });
 
   // lignes de config
@@ -85,26 +96,17 @@ function showDetail(i) {
   o.configs.forEach(c => {
     cfgBody.insertAdjacentHTML('beforeend', `
       <tr>
-        <td>${c.id}</td>
-        <td>${c.qty}</td>
-        <td>${c.techno}</td>
-        <td>${c.material}</td>
-        <td>${c.finish}</td>
-        <td>${c.delay}</td>
-        <td>${c.unitPrice.toFixed(2)}</td>
-        <td>${c.totalPrice.toFixed(2)}</td>
+        <td>${c.id}</td><td>${c.qty}</td><td>${c.techno}</td><td>${c.material}</td>
+        <td>${c.finish}</td><td>${c.delay}</td>
+        <td>${c.unitPrice.toFixed(2)}</td><td>${c.totalPrice.toFixed(2)}</td>
       </tr>`);
   });
 
   // récap tarifaire
-  document.getElementById('sumPieces').textContent   = o.details.piecesPrice.toFixed(2);
-  document.getElementById('sumDiscount').textContent = o.details.discount.toFixed(2);
-  document.getElementById('sumShipping').textContent = o.details.shippingCost.toFixed(2);
-  document.getElementById('sumVat').textContent      = o.details.vat.toFixed(2);
-  document.getElementById('sumTotal').textContent    = o.total.toFixed(2);
+  document.getElementById('sumTotal').textContent = o.total.toFixed(2);
 }
 
-// affiche/masque liste vs détail
+// bascule vue liste ↔ détail
 function toggleView(view) {
   document.getElementById('orders-list').classList.toggle('hidden', view==='detail');
   document.getElementById('order-detail').classList.toggle('hidden', view!=='detail');
