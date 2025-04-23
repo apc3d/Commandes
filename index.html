@@ -29,27 +29,15 @@
           </tr>
         </thead>
         <tbody id="ordersTableBody">
-          <!-- script.js injecte ici -->
+          <!-- injecté par script.js -->
         </tbody>
       </table>
     </section>
-
-    <!-- (bouton "Toutes les commandes" supprimé) -->
 
     <!-- DÉTAIL (caché par défaut) -->
     <section id="order-detail" class="order-detail hidden">
       <button id="backToList" class="btn-back">← Retour aux commandes</button>
       <h2>Commande <span id="detailOrderNumber"></span></h2>
-
-      <div class="order-meta">
-        <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
-        <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
-        <div><strong>Adresse de livraison :</strong> <span id="detailShipping"></span></div>
-        <div><strong>Adresse de facturation :</strong> <span id="detailBilling"></span></div>
-        <div><strong>Mode de paiement :</strong> <span id="detailPayment"></span></div>
-        <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
-        <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
-      </div>
 
       <div class="order-status">
         <div class="step" data-step="validated">Validée</div>
@@ -68,17 +56,35 @@
           </tr>
         </thead>
         <tbody id="configLinesBody">
-          <!-- script.js injecte ici -->
+          <!-- injecté par script.js -->
         </tbody>
       </table>
 
       <!-- Récapitulatif tarifaire -->
       <div class="price-summary">
-        <div><strong>Prix des pièces :</strong> <span id="sumPieces"></span> €</div>
-        <div><strong>Remise :</strong> <span id="sumDiscount"></span> €</div>
-        <div><strong>Livraison :</strong> <span id="sumShipping"></span> €</div>
-        <div><strong>TVA :</strong> <span id="sumVat"></span> €</div>
-        <div class="total-line"><strong>Total :</strong> <span id="sumTotal"></span> €</div>
+        <div class="total-only">
+          <strong>Montant total de la commande (HT) : </strong>
+          <span id="sumTotal"></span> €
+        </div>
+        <div class="vat-note">
+          TVA 20 % en sus
+        </div>
+      </div>
+
+      <!-- Adresse + paiement (en colonnes) -->
+      <div class="order-info-bottom">
+        <div class="info-col">
+          <h4>Adresse de livraison</h4>
+          <p id="detailShipping"></p>
+        </div>
+        <div class="info-col">
+          <h4>Adresse de facturation</h4>
+          <p id="detailBilling"></p>
+        </div>
+        <div class="info-col">
+          <h4>Mode de paiement</h4>
+          <p id="detailPayment"></p>
+        </div>
       </div>
     </section>
 
