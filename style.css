@@ -1,4 +1,3 @@
-/* style.css spécifique à /Commandes/ */
 :root {
   --orange:     #FFA500;
   --grey-light: #EEEEEE;
@@ -48,16 +47,21 @@ body {
 .orders-table tr:nth-child(even) {
   background:var(--grey-light);
 }
+.orders-table tr {
+  transition: background .2s;
+  cursor: pointer;
+}
 .orders-table tr:hover {
-  background:var(--bg); cursor:pointer;
+  background:rgba(255,165,0,0.1);
 }
 .status-label {
   display:inline-block; padding:4px 8px;
   background:var(--orange); color:var(--white);
   border-radius:4px; font-size:13px;
 }
+
+/* Actions : on garde qu'un lien bleu */
 .orders-table .actions {
-  /* centre le lien */
   text-align:right;
 }
 .orders-table .actions a {
@@ -75,14 +79,10 @@ body {
   padding:24px; margin-top:24px;
 }
 .order-detail h2 {
-  font-size:22px; color:var(--grey-dark); margin:0 0 16px;
+  font-size:22px; color:var(--grey-dark); margin-bottom:16px;
 }
-.order-meta {
-  display:flex; flex-wrap:wrap; gap:24px; margin-bottom:24px;
-}
-.order-meta div { font-size:14px; color:var(--grey-dark); }
-.order-meta a { color:var(--orange); text-decoration:none; }
-.order-meta a:hover { text-decoration:underline; }
+
+/* Barre de statut */
 .order-status {
   display:flex; gap:8px; margin-bottom:24px;
 }
@@ -98,6 +98,8 @@ body {
   background:var(--orange); color:#fff;
   border-top-color:var(--orange);
 }
+
+/* Lignes de config */
 .config-lines {
   width:100%; border-collapse:collapse; font-size:14px;
   margin-bottom:24px;
@@ -109,10 +111,36 @@ body {
   padding:8px; border:1px solid var(--grey-med);
   text-align:center;
 }
+
+/* Récap tarifaire */
 .price-summary {
-  font-size:14px; line-height:1.4;
+  display:flex; justify-content:flex-end; align-items:center;
+  gap:16px; margin-bottom:24px;
+  font-size:14px;
 }
-.price-summary div { margin-bottom:4px; }
-.price-summary .total-line {
-  margin-top:8px; font-size:16px; font-weight:600;
+.price-summary .total-only {
+  font-weight:600;
+}
+.price-summary .vat-note {
+  font-size:12px; color:var(--grey-dark);
+}
+
+/* Infos en bas */
+.order-info-bottom {
+  display:flex; gap:24px; flex-wrap:wrap;
+}
+.info-col {
+  flex:1; min-width:200px;
+}
+.info-col h4 {
+  margin-bottom:8px; font-size:16px; color:var(--grey-dark);
+}
+.info-col p {
+  font-size:14px; color:var(--grey-dark);
+}
+
+/* Responsive */
+@media (max-width:768px) {
+  .order-info-bottom { flex-direction:column; }
+  .orders-table, .config-lines { font-size:12px; }
 }
