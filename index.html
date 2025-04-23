@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Détail commande – APC3D</title>
+  <!-- votre style global “configurateur” -->
+  <link rel="stylesheet" href="../style.css">
+  <!-- style spécifique détail commande -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +18,7 @@
 
   <main class="cmd-main">
 
-    <!-- METADONNÉES COMMANDE -->
+    <!-- Méta-infos commande -->
     <div class="order-meta">
       <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
       <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
@@ -23,7 +26,7 @@
       <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
     </div>
 
-    <!-- BARRE DE STATUT -->
+    <!-- Barre de statut -->
     <div class="order-status">
       <div class="step" data-step="validated">Validée</div>
       <div class="step" data-step="preparation">Préparation</div>
@@ -32,10 +35,8 @@
       <div class="step" data-step="delivered">Livrée</div>
     </div>
 
-    <!-- LISTE DES CONFIGURATIONS -->
-    <div id="configItems" class="config-items">
-      <!-- script.js injecte ici une "mini-config" pour chaque pièce -->
-    </div>
+    <!-- Injecte ici N panneaux de config, un par pièce -->
+    <div id="configItems" class="config-list"></div>
 
   </main>
 
