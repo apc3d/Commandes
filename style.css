@@ -1,13 +1,104 @@
-/* Infobox Date / Délai / Facture / Suivi */
-.order-meta {
-  display: flex;
-  gap: 24px;
-  margin: 20px 0;
+:root {
+  --orange:     #FFA500;
+  --grey-light: #EEEEEE;
+  --grey-med:   #CCCCCC;
+  --grey-dark:  #333333;
+  --blue:       #0057E7;
+  --white:      #FFFFFF;
+  --bg:         #F9F9F9;
 }
-.order-meta div { font-size:14px; color:var(--grey-dark); }
-.order-meta a { color:var(--orange); text-decoration:none; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Segoe UI',sans-serif;
+  background:var(--bg);
+}
+.cmd-header {
+  display:flex; align-items:center; gap:16px;
+  background:var(--white); padding:20px;
+}
+.cmd-header h1 {
+  font-size:24px; color:var(--grey-dark);
+  margin:0;
+}
+.btn-back {
+  color:var(--orange); text-decoration:none; font-weight:600;
+}
+.cmd-main {
+  width:90%; max-width:1200px; margin:20px auto 40px;
+}
 
-/* Barre de statut */
+/* === LISTE DES COMMANDES === */
+.orders-list {
+  background:var(--white);
+  border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  overflow-x:auto;
+}
+.orders-table {
+  width:100%; border-collapse:collapse; font-size:14px;
+}
+.orders-table th {
+  background:var(--grey-light); padding:12px; text-align:left;
+  color:var(--grey-dark);
+}
+.orders-table td {
+  padding:12px; vertical-align:middle;
+  border-bottom:1px solid var(--grey-med);
+}
+.orders-table tr:nth-child(even) {
+  background:var(--grey-light);
+}
+.orders-table tr {
+  cursor:pointer;
+  transition:background .2s;
+}
+.orders-table tr:hover {
+  background:rgba(255,165,0,0.1);
+}
+.status-label {
+  display:inline-block; padding:4px 8px;
+  background:var(--orange); color:var(--white);
+  border-radius:4px; font-size:13px;
+}
+/* lien unique pour relancer */
+.orders-table .actions {
+  text-align:right;
+}
+.orders-table .actions a {
+  color:var(--blue); text-decoration:none; font-size:13px;
+}
+.orders-table .actions a:hover {
+  text-decoration:underline;
+}
+
+/* === DÉTAIL DE COMMANDE === */
+.hidden { display:none!important; }
+.order-detail {
+  background:var(--white); border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  padding:24px; margin-top:24px;
+}
+.order-detail h2 {
+  font-size:22px; color:var(--grey-dark);
+  margin:12px 0 24px;
+}
+
+/* infos principales */
+.order-meta {
+  display:flex; gap:24px; flex-wrap:wrap;
+  margin-bottom:24px;
+}
+.order-meta div {
+  font-size:14px; color:var(--grey-dark);
+}
+.order-meta a {
+  color:var(--orange); text-decoration:none;
+}
+.order-meta a:hover {
+  text-decoration:underline;
+}
+
+/* statut */
 .order-status {
   display:flex; gap:8px; margin-bottom:24px;
 }
@@ -24,13 +115,14 @@
   border-top-color:var(--orange);
 }
 
-/* Table config-lines (inchangé) */
+/* tableau des configs */
 .config-lines {
   width:100%; border-collapse:collapse; font-size:14px;
-  margin-bottom:24px;
+  margin-bottom:0;
 }
 .config-lines th {
   background:var(--grey-light); padding:8px; text-align:center;
+  font-weight:500;
 }
 .config-lines td {
   padding:8px; border:1px solid var(--grey-med);
