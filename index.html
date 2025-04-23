@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mes commandes – APC3D</title>
-  <!-- Styles globaux si besoin -->
   <link rel="stylesheet" href="../style.css">
-  <!-- Styles commandes -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,29 +15,28 @@
   </header>
 
   <main class="cmd-main">
-    <!-- LISTE -->
+
+    <!-- LISTE DES COMMANDES -->
     <section id="orders-list" class="orders-list">
       <table class="orders-table">
         <thead>
           <tr>
-            <th>Nombre</th>
+            <th>Numéro</th>
             <th>Date</th>
             <th>Prix</th>
             <th>État</th>
-            <th>Actes</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="ordersTableBody">
-          <!-- <script.js> injecte ici les lignes -->
+          <!-- script.js injecte ici -->
         </tbody>
       </table>
     </section>
 
-    <div class="all-orders-btn">
-      <a href="index.html">Toutes les commandes →</a>
-    </div>
+    <!-- (bouton "Toutes les commandes" supprimé) -->
 
-    <!-- DÉTAIL (caché jusqu'à clic) -->
+    <!-- DÉTAIL (caché par défaut) -->
     <section id="order-detail" class="order-detail hidden">
       <button id="backToList" class="btn-back">← Retour aux commandes</button>
       <h2>Commande <span id="detailOrderNumber"></span></h2>
@@ -47,6 +44,9 @@
       <div class="order-meta">
         <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
         <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
+        <div><strong>Adresse de livraison :</strong> <span id="detailShipping"></span></div>
+        <div><strong>Adresse de facturation :</strong> <span id="detailBilling"></span></div>
+        <div><strong>Mode de paiement :</strong> <span id="detailPayment"></span></div>
         <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
         <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
       </div>
@@ -68,10 +68,20 @@
           </tr>
         </thead>
         <tbody id="configLinesBody">
-          <!-- <script.js> injecte ici -->
+          <!-- script.js injecte ici -->
         </tbody>
       </table>
+
+      <!-- Récapitulatif tarifaire -->
+      <div class="price-summary">
+        <div><strong>Prix des pièces :</strong> <span id="sumPieces"></span> €</div>
+        <div><strong>Remise :</strong> <span id="sumDiscount"></span> €</div>
+        <div><strong>Livraison :</strong> <span id="sumShipping"></span> €</div>
+        <div><strong>TVA :</strong> <span id="sumVat"></span> €</div>
+        <div class="total-line"><strong>Total :</strong> <span id="sumTotal"></span> €</div>
+      </div>
     </section>
+
   </main>
 
   <script src="script.js"></script>
