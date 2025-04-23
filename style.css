@@ -115,6 +115,16 @@ body {
   border-top-color:var(--orange);
 }
 
+/* miniature 3D */
+.order-image {
+  text-align:center; margin-bottom:16px;
+}
+.order-image img {
+  max-width:200px;
+  border:1px solid var(--grey-med);
+  border-radius:4px;
+}
+
 /* tableau des configs */
 .config-lines {
   width:100%; border-collapse:collapse; font-size:14px;
