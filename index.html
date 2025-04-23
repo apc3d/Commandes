@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mes commandes – APC3D</title>
-  <!-- Styles globaux si besoin -->
   <link rel="stylesheet" href="../style.css">
-  <!-- Styles commandes -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,61 +15,27 @@
   </header>
 
   <main class="cmd-main">
-    <!-- LISTE -->
+
+    <!-- LISTE DES COMMANDES -->
     <section id="orders-list" class="orders-list">
       <table class="orders-table">
         <thead>
           <tr>
-            <th>Nombre</th>
+            <th>Numéro</th>
             <th>Date</th>
             <th>Prix</th>
             <th>État</th>
-            <th>Actes</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="ordersTableBody">
-          <!-- <script.js> injecte ici les lignes -->
+          <!-- script.js injecte ici -->
         </tbody>
       </table>
     </section>
 
-    <div class="all-orders-btn">
-      <a href="index.html">Toutes les commandes →</a>
-    </div>
+    <!-- PAS DE BOUTON “Toutes les commandes” -->
 
-    <!-- DÉTAIL (caché jusqu'à clic) -->
-    <section id="order-detail" class="order-detail hidden">
-      <button id="backToList" class="btn-back">← Retour aux commandes</button>
-      <h2>Commande <span id="detailOrderNumber"></span></h2>
-
-      <div class="order-meta">
-        <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
-        <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
-        <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
-        <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
-      </div>
-
-      <div class="order-status">
-        <div class="step" data-step="validated">Validée</div>
-        <div class="step" data-step="preparation">Préparation</div>
-        <div class="step" data-step="production">Fabrication</div>
-        <div class="step" data-step="shipped">Expédiée</div>
-        <div class="step" data-step="delivered">Livrée</div>
-      </div>
-
-      <h3>Contenu de la commande</h3>
-      <table class="config-lines">
-        <thead>
-          <tr>
-            <th>Réf</th><th>Qté</th><th>Techno</th><th>Matériau</th>
-            <th>Finition</th><th>Délais</th><th>Prix U. (€)</th><th>Total (€)</th>
-          </tr>
-        </thead>
-        <tbody id="configLinesBody">
-          <!-- <script.js> injecte ici -->
-        </tbody>
-      </table>
-    </section>
   </main>
 
   <script src="script.js"></script>
