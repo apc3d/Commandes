@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <!-- ← LISTING DES COMMANDES inchangé → -->
+  <!-- ← LISTING DES COMMANDES -->
   <header class="cmd-header">
     <a href="../index.html" class="btn-back">← Retour au dashboard</a>
     <h1>Commandes récentes et en cours</h1>
@@ -18,9 +18,7 @@
     <section id="orders-list" class="orders-list">
       <table class="orders-table">
         <thead>
-          <tr>
-            <th>Numéro</th><th>Date</th><th>Prix</th><th>État</th><th>Actions</th>
-          </tr>
+          <tr><th>Numéro</th><th>Date</th><th>Prix</th><th>État</th><th>Actions</th></tr>
         </thead>
         <tbody id="ordersTableBody"></tbody>
       </table>
@@ -51,30 +49,29 @@
     </section>
   </main>
 
-  <!-- ——— TEMPLATE pour chaque bloc de config ——— -->
+  <!-- ——— TEMPLATE DE CONFIG (détail) ——— -->
   <template id="config-template">
     <div class="panel-wrapper">
       <div class="panel">
-        <!-- Col 1 : Aperçu 3D + REF -->
+        <!-- Col 1 : Aperçu + REF -->
         <div class="col preview">
           <div class="viewer"></div>
           <p class="ref">Ref : <span class="filename"></span></p>
         </div>
-        <!-- Col 2 : Valeurs figées dans des inputs bordés -->
+
+        <!-- Col 2 : Valeurs encadrées -->
         <div class="col settings">
           <input type="text" name="techno" class="setting-input" disabled />
           <input type="text" name="material" class="setting-input" disabled />
           <input type="text" name="finish" class="setting-input" disabled />
           <input type="text" name="color" class="setting-input" disabled />
         </div>
-        <!-- Col 3 : Inserts / délai / checks -->
+
+        <!-- Col 3 : Inserts (cellule encadrée), délai & checks -->
         <div class="col extras">
           <div class="field">
-            <label>Inserts / taraudages manuels</label>
-            <div class="slider-container">
-              <input type="range" class="inserts-range" min="0" max="50" disabled />
-              <input type="text" class="inserts-count" disabled />
-            </div>
+            <label>Inserts / taraudages</label>
+            <input type="text" name="inserts" class="setting-input" disabled />
           </div>
           <div class="field delivery">
             <label>Délai de livraison</label>
@@ -85,15 +82,16 @@
             </div>
           </div>
           <div class="field checks">
-            <label><input type="checkbox" disabled /> Contrôle du fichier par un expert</label>
-            <label><input type="checkbox" disabled /> Conserver l'orientation originale</label>
+            <label><input type="checkbox" disabled /> Contrôle du fichier</label>
+            <label><input type="checkbox" disabled /> Conserver orientation</label>
           </div>
         </div>
-        <!-- Col 4 : Récap quantités & prix dans un bandeau gris -->
+
+        <!-- Col 4 : Quantité / Prix (bandeau gris) -->
         <div class="col summary">
           <div class="summary-header">
             <div class="field qty-order">
-              <label>Quantité</label>
+              <label>Qté</label>
               <input type="number" class="quantity" disabled />
             </div>
             <div class="field">
