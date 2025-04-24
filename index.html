@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mes commandes – APC3D</title>
+  <!-- styles globaux (configurateur) -->
   <link rel="stylesheet" href="../style.css" />
+  <!-- styles page commandes (listing) -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ← LISTING DES COMMANDES -->
+  <!-- LISTING DES COMMANDES (inchangé) -->
   <header class="cmd-header">
     <a href="../index.html" class="btn-back">← Retour au dashboard</a>
     <h1>Commandes récentes et en cours</h1>
@@ -18,13 +20,17 @@
     <section id="orders-list" class="orders-list">
       <table class="orders-table">
         <thead>
-          <tr><th>Numéro</th><th>Date</th><th>Prix</th><th>État</th><th>Actions</th></tr>
+          <tr>
+            <th>Numéro</th><th>Date</th><th>Prix</th><th>État</th><th>Actions</th>
+          </tr>
         </thead>
-        <tbody id="ordersTableBody"></tbody>
+        <tbody id="ordersTableBody">
+          <!-- script.js injecte ici -->
+        </tbody>
       </table>
     </section>
 
-    <!-- → DÉTAIL D’UNE COMMANDE ← -->
+    <!-- DÉTAIL D’UNE COMMANDE (modifié) -->
     <section id="order-detail" class="order-detail hidden">
       <button id="backToList" class="btn-back">← Retour aux commandes</button>
       <h2>Commande <span id="detailOrderNumber"></span></h2>
@@ -49,65 +55,24 @@
     </section>
   </main>
 
-  <!-- ——— TEMPLATE DE CONFIG (détail) ——— -->
+  <!-- TEMPLATE EXACT DU CONFIGURATEUR -->
   <template id="config-template">
     <div class="panel-wrapper">
       <div class="panel">
-        <!-- Col 1 : Aperçu + REF -->
+        <!-- Col 1 : Aperçu + REF + dims -->
         <div class="col preview">
-          <div class="viewer"></div>
+          <div class="viewer"><div class="progress-overlay hidden"><span>0%</span></div></div>
           <p class="ref">Ref : <span class="filename"></span></p>
+          <p class="dims">
+            Dimensions :<br />
+            <span class="dimx"></span> × <span class="dimy"></span> × <span class="dimz"></span> mm<br />
+            Volume : <span class="vol"></span> cm³
+          </p>
         </div>
-
-        <!-- Col 2 : Valeurs encadrées -->
+        <!-- Col 2 : Sélections (désactivées) -->
         <div class="col settings">
-          <input type="text" name="techno" class="setting-input" disabled />
-          <input type="text" name="material" class="setting-input" disabled />
-          <input type="text" name="finish" class="setting-input" disabled />
-          <input type="text" name="color" class="setting-input" disabled />
-        </div>
-
-        <!-- Col 3 : Inserts (cellule encadrée), délai & checks -->
-        <div class="col extras">
           <div class="field">
-            <label>Inserts / taraudages</label>
-            <input type="text" name="inserts" class="setting-input" disabled />
+            <label>Technologie</label>
+            <select name="techno" disabled><option>FDM</option><option>SLA</option><option>SLS</option></select>
           </div>
-          <div class="field delivery">
-            <label>Délai de livraison</label>
-            <div class="opts">
-              <div class="opt" data-type="fast">Fast<br /><span class="opt-date">–</span></div>
-              <div class="opt" data-type="standard">Standard<br /><span class="opt-date">–</span></div>
-              <div class="opt" data-type="eco">Eco<br /><span class="opt-date">–</span></div>
-            </div>
-          </div>
-          <div class="field checks">
-            <label><input type="checkbox" disabled /> Contrôle du fichier</label>
-            <label><input type="checkbox" disabled /> Conserver orientation</label>
-          </div>
-        </div>
-
-        <!-- Col 4 : Quantité / Prix (bandeau gris) -->
-        <div class="col summary">
-          <div class="summary-header">
-            <div class="field qty-order">
-              <label>Qté</label>
-              <input type="number" class="quantity" disabled />
-            </div>
-            <div class="field">
-              <label>Unité (EUR)</label>
-              <div class="unit-price">0.00</div>
-            </div>
-            <div class="field">
-              <label>Total (EUR)</label>
-              <div class="total-price">0.00</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </template>
-
-  <script src="script.js"></script>
-</body>
-</html>
+          <div class="field">
