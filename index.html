@@ -3,34 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Détail de commande – APC3D</title>
+  <title>Mes commandes – APC3D</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <button id="backToList" class="btn-back">← Retour aux commandes</button>
-  <h1>Commande <span id="detailOrderNumber"></span></h1>
+  <!-- ← LISTING DES COMMANDES inchangé → -->
+  <header class="cmd-header">
+    <a href="../index.html" class="btn-back">← Retour au dashboard</a>
+    <h1>Commandes récentes et en cours</h1>
+  </header>
+  <main class="cmd-main">
+    <section id="orders-list" class="orders-list">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Numéro</th><th>Date</th><th>Prix</th><th>État</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTableBody"></tbody>
+      </table>
+    </section>
 
-  <div class="order-meta">
-    <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
-    <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
-    <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
-    <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
-  </div>
+    <!-- → DÉTAIL D’UNE COMMANDE ← -->
+    <section id="order-detail" class="order-detail hidden">
+      <button id="backToList" class="btn-back">← Retour aux commandes</button>
+      <h2>Commande <span id="detailOrderNumber"></span></h2>
 
-  <div class="order-status">
-    <div class="step" data-step="validated">Validée</div>
-    <div class="step" data-step="preparation">Préparation</div>
-    <div class="step" data-step="production">Fabrication</div>
-    <div class="step" data-step="shipped">Expédiée</div>
-    <div class="step" data-step="delivered">Livrée</div>
-  </div>
+      <div class="order-meta">
+        <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
+        <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
+        <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
+        <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
+      </div>
 
-  <h2>Contenu de la commande</h2>
-  <div id="config-detail-container"></div>
+      <div class="order-status">
+        <div class="step" data-step="validated">Validée</div>
+        <div class="step" data-step="preparation">Préparation</div>
+        <div class="step" data-step="production">Fabrication</div>
+        <div class="step" data-step="shipped">Expédiée</div>
+        <div class="step" data-step="delivered">Livrée</div>
+      </div>
 
-  <!-- TEMPLATE DE CONFIGURATEUR -->
+      <h3>Contenu de la commande</h3>
+      <div id="config-detail-container"></div>
+    </section>
+  </main>
+
+  <!-- ——— TEMPLATE pour chaque bloc de config ——— -->
   <template id="config-template">
     <div class="panel-wrapper">
       <div class="panel">
@@ -38,34 +59,21 @@
         <div class="col preview">
           <div class="viewer"></div>
           <p class="ref">Ref : <span class="filename"></span></p>
-          <p class="dims">…</p>
         </div>
-        <!-- Col 2 : Settings (remplacé en dur par script) -->
+        <!-- Col 2 : Valeurs figées dans des inputs bordés -->
         <div class="col settings">
-          <div class="field">
-            <label>Technologie</label>
-            <select name="techno"><option>FDM</option><option>SLA</option><option>SLS</option></select>
-          </div>
-          <div class="field">
-            <label>Matériaux</label>
-            <select name="material"><option>PLA</option><option>ABS</option><option>PETG</option></select>
-          </div>
-          <div class="field">
-            <label>Finition</label>
-            <select name="finish"><option>Sélectionnez</option><option>Brut</option><option>Poli</option></select>
-          </div>
-          <div class="field">
-            <label>Couleur</label>
-            <select name="color"><option>Sélectionnez</option><option>Blanc</option><option>Noir</option></select>
-          </div>
+          <input type="text" name="techno" class="setting-input" disabled />
+          <input type="text" name="material" class="setting-input" disabled />
+          <input type="text" name="finish" class="setting-input" disabled />
+          <input type="text" name="color" class="setting-input" disabled />
         </div>
-        <!-- Col 3 : Extras (inchangé) -->
+        <!-- Col 3 : Inserts / délai / checks -->
         <div class="col extras">
           <div class="field">
             <label>Inserts / taraudages manuels</label>
             <div class="slider-container">
-              <input type="range" class="inserts-range" min="0" max="50" value="0" />
-              <span class="inserts-count">0</span>
+              <input type="range" class="inserts-range" min="0" max="50" disabled />
+              <input type="text" class="inserts-count" disabled />
             </div>
           </div>
           <div class="field delivery">
@@ -77,16 +85,16 @@
             </div>
           </div>
           <div class="field checks">
-            <label><input type="checkbox" /> Contrôle du fichier par un expert</label>
-            <label><input type="checkbox" /> Conserver l'orientation originale</label>
+            <label><input type="checkbox" disabled /> Contrôle du fichier par un expert</label>
+            <label><input type="checkbox" disabled /> Conserver l'orientation originale</label>
           </div>
         </div>
-        <!-- Col 4 : Récap tarifs (mini‐tableau supprimé) -->
+        <!-- Col 4 : Récap quantités & prix dans un bandeau gris -->
         <div class="col summary">
           <div class="summary-header">
             <div class="field qty-order">
               <label>Quantité</label>
-              <input type="number" class="quantity" value="1" min="1" />
+              <input type="number" class="quantity" disabled />
             </div>
             <div class="field">
               <label>Unité (EUR)</label>
