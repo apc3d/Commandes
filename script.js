@@ -1,4 +1,4 @@
-// données factices
+// données factices avec plusieurs configs
 const orders = [
   {
     number: '5442315',
@@ -9,8 +9,8 @@ const orders = [
     status: 'delivered',
     configs: [
       {
-        imageUrl:      'https://via.placeholder.com/120x80',
-        id:            'Carter arrière batterie 16A.stl',
+        imageUrl:      'https://via.placeholder.com/200x120?text=Aperçu+1',
+        id:            'Carter_arrière_batterie_16A.stl',
         techno:        'FDM',
         material:      'PLA',
         finish:        'Brut',
@@ -26,6 +26,44 @@ const orders = [
         dimY:          65.00,
         dimZ:          10.00,
         volume:        45.22
+      },
+      {
+        imageUrl:      'https://via.placeholder.com/200x120?text=Aperçu+2',
+        id:            'Cache_carte_distrib_v2.stl',
+        techno:        'SLA',
+        material:      'Résine',
+        finish:        'Poli',
+        color:         'Blanc',
+        insertsCount:  2,
+        delay:         'Fast',
+        controlFile:   true,
+        keepOrientation:false,
+        qty:           3,
+        unitPrice:     45.00,
+        totalPrice:    135.00,
+        dimX:          80.00,
+        dimY:          80.00,
+        dimZ:          15.00,
+        volume:        60.00
+      },
+      {
+        imageUrl:      'https://via.placeholder.com/200x120?text=Aperçu+3',
+        id:            'Support_pied_vintage.step',
+        techno:        'SLS',
+        material:      'Nylon',
+        finish:        'Normale',
+        color:         'Gris',
+        insertsCount:  1,
+        delay:         'Eco',
+        controlFile:   false,
+        keepOrientation:true,
+        qty:           2,
+        unitPrice:     60.50,
+        totalPrice:    121.00,
+        dimX:          50.00,
+        dimY:          100.00,
+        dimZ:          20.00,
+        volume:        80.00
       }
     ]
   }
@@ -33,11 +71,11 @@ const orders = [
 const steps = ['validated','preparation','production','shipped','delivered'];
 
 window.addEventListener('DOMContentLoaded', () => {
-  // on simule qu'on affiche directement la première commande
+  // on affiche directement la 1ʳᵉ commande
   showDetail(0);
   document.getElementById('backToList').addEventListener('click', e => {
     e.preventDefault();
-    // ici vous pourriez revenir à la liste
+    // ici, redirection vers la liste
   });
 });
 
@@ -62,15 +100,13 @@ function showDetail(i) {
     const tpl   = document.getElementById('config-template');
     const clone = tpl.content.cloneNode(true);
 
-    // aperçu
+    // Aperçu
     const viewer = clone.querySelector('.viewer');
-    const img    = document.createElement('img');
-    img.src      = c.imageUrl;
-    img.alt      = c.id;
-    img.style.maxWidth = '100%';
-    viewer.appendChild(img);
+    viewer.innerHTML = `<img src="${c.imageUrl}"
+                             alt="${c.id}"
+                             style="max-width:100%;max-height:100%;">`;
 
-    // ref + dims
+    // REF & dimensions
     clone.querySelector('.filename').textContent = c.id;
     clone.querySelector('.dims').innerHTML = `
       Dimensions :<br>
@@ -78,38 +114,37 @@ function showDetail(i) {
       Volume : ${c.volume.toFixed(2)} cm³
     `;
 
-    // sélections
+    // Sélections
     clone.querySelector('select[name="techno"]').value   = c.techno;
     clone.querySelector('select[name="material"]').value = c.material;
     clone.querySelector('select[name="finish"]').value   = c.finish;
     clone.querySelector('select[name="color"]').value    = c.color;
 
-    // inserts
+    // Inserts
     clone.querySelector('.inserts-range').value       = c.insertsCount;
     clone.querySelector('.inserts-count').textContent = c.insertsCount;
 
-    // cases
+    // Cases
     const checks = clone.querySelectorAll('.checks input');
     checks[0].checked = c.controlFile;
     checks[1].checked = c.keepOrientation;
 
-    // délai
-    clone.querySelector(`.opt[data-type="${c.delay.toLowerCase()}"]`).classList.add('active');
+    // Délais
+    clone.querySelector(`.opt[data-type="${c.delay.toLowerCase()}"]`)
+         .classList.add('active');
+    // (optionnel : on pourrait remplir .opt-date si besoin)
 
-    // quantités & prix
-    clone.querySelector('.quantity').value           = c.qty;
-    clone.querySelector('.unit-price').textContent   = c.unitPrice.toFixed(2);
-    clone.querySelector('.total-price').textContent  = c.totalPrice.toFixed(2);
+    // Quantité & prix
+    clone.querySelector('.quantity').value          = c.qty;
+    clone.querySelector('.unit-price').textContent  = c.unitPrice.toFixed(2);
+    clone.querySelector('.total-price').textContent = c.totalPrice.toFixed(2);
 
-    // — suppressions demandées —
-    clone.querySelector('.toolbar')?.remove();             // pas de barre grise
-    clone.querySelector('.summary table')?.remove();       // pas de mini-tableau
-
-    // — figer les champs —
+    // On supprime barre grise et mini-tableau (déjà absents du template)
+    // On fige tout
     clone.querySelectorAll('select, input, .inserts-range, .opt').forEach(el => {
       el.setAttribute('disabled','');
       el.style.pointerEvents = 'none';
-      el.style.opacity       = '0.6';
+      el.style.opacity = '0.6';
     });
 
     container.appendChild(clone);
