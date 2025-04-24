@@ -1,183 +1,176 @@
+/* style.css spécifique à /commandes/ */
 :root {
-  --orange:     #FFA500;
-  --grey-light: #EEEEEE;
-  --grey-med:   #CCCCCC;
-  --grey-dark:  #333333;
-  --blue:       #0057E7;
-  --white:      #FFFFFF;
-  --bg:         #F9F9F9;
+  --orange:    #FFA500;
+  --grey-light:#EEEEEE;
+  --grey-med:  #CCCCCC;
+  --grey-dark: #333333;
+  --blue:      #0057E7;
+  --white:     #FFFFFF;
+  --bg:        #F9F9F9;
 }
 
-* { box-sizing:border-box; margin:0; padding:0; }
 body {
-  font-family:'Segoe UI',sans-serif;
-  font-size:14px;
-  color:var(--grey-dark);
-  background:var(--bg);
-  padding:20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
 }
 
-/* Onglets */
-.tabs {
-  list-style:none;
-  display:flex;
-  gap:4px;
-  margin-bottom:20px;
+/* En-tête */
+.cmd-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--white);
+  padding: 20px;
 }
-.tab {
-  flex:1;
-  text-align:center;
-  padding:12px 0;
-  background:var(--grey-light);
-  color:var(--grey-dark);
-  border-radius:4px;
-  font-weight:500;
-  pointer-events:none;
+.cmd-header h1 {
+  font-size: 24px;
+  color: var(--grey-dark);
+  margin: 0;
 }
-.tab.active {
-  background:var(--orange);
-  color:var(--white);
+.btn-back {
+  text-decoration: none;
+  color: var(--orange);
+  font-weight: 600;
 }
 
-/* Panel wrapper */
-.panel-wrapper {
-  background:var(--white);
-  border-radius:4px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
-  padding:16px;
-  margin-bottom:24px;
+/* Conteneur général */
+.cmd-main {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto 40px;
 }
 
-/* 4 colonnes */
-.panel {
-  display:grid;
-  grid-template-columns:160px 1fr 1fr 1fr;
-  gap:16px;
+/* Liste des commandes */
+.orders-list {
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow-x: auto;
+}
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.orders-table th {
+  background: var(--grey-light);
+  padding: 12px;
+  text-align: left;
+  color: var(--grey-dark);
+}
+.orders-table td {
+  padding: 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--grey-med);
+  cursor: pointer;
+}
+.orders-table tr:nth-child(even) {
+  background: var(--grey-light);
+}
+.orders-table tr:hover td {
+  background: var(--bg);
 }
 
-/* Col 1 : Aperçu */
-.preview .box {
-  width:160px; height:160px;
-  background:#f0f0f0;
-  border:1px solid var(--grey-med);
-  border-radius:4px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:8px;
-}
-.preview .dims {
-  font-size:12px;
-  line-height:1.4;
-  color:var(--grey-dark);
-  text-align:center;
-}
-.preview input[type=file] {
-  margin-top:8px;
+/* Étiquette d’état */
+.status-label {
+  display: inline-block;
+  padding: 4px 8px;
+  background: var(--orange);
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 13px;
 }
 
-/* Col 2 : Sélections */
-.settings {
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+/* Actions */
+.actions a {
+  text-decoration: none;
+  color: var(--blue);
+  font-size: 13px;
+  margin-right: 12px;
+  vertical-align: middle;
 }
-.field label {
-  font-size:13px;
-  margin-bottom:4px;
-}
-.field select {
-  width:100%;
-  padding:6px;
-  border:1px solid var(--grey-med);
-  border-radius:4px;
+.actions a:hover {
+  text-decoration: underline;
 }
 
-/* Col 3 : Extras */
-.extras {
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+/* Détail de commande */
+.hidden { display: none !important; }
+.order-detail {
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 24px;
+  margin-top: 24px;
 }
-#insertsRange {
-  width:100%;
-  margin-bottom:4px;
+.order-detail h2 {
+  font-size: 22px;
+  color: var(--grey-dark);
+  margin-top: 0;
 }
-#insertsCount {
-  text-align:right;
-  font-size:13px;
-  color:var(--grey-dark);
+.order-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 24px;
 }
-.delivery .opts {
-  display:flex;
-  gap:4px;
-  margin-top:4px;
+.order-meta div {
+  font-size: 14px;
+  color: var(--grey-dark);
 }
-.opt {
-  flex:1;
-  padding:8px 4px;
-  border:1px solid var(--grey-med);
-  border-radius:2px;
-  text-align:center;
-  cursor:pointer;
-  font-size:13px;
+.order-meta a {
+  color: var(--orange);
+  text-decoration: none;
 }
-.opt.active {
-  background:var(--orange);
-  color:var(--white);
-  border-color:var(--orange);
-}
-.checks label {
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:13px;
+.order-meta a:hover {
+  text-decoration: underline;
 }
 
-/* Col 4 : Récap (fond blanc) */
-.summary {
-  background:var(--white);
-  padding:8px;
-  border-radius:4px;
-  border:1px solid var(--grey-light);
+/* Barre de suivi */
+.order-status {
+  display: flex;
+  gap: 8px;
+  margin: 24px 0;
 }
-.summary-header {
-  display:flex;
-  gap:12px;
-  margin-bottom:12px;
-  align-items:flex-end;
+.step {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 13px;
+  color: var(--grey-dark);
+  border-top: 4px solid var(--grey-med);
+  border-radius: 4px 4px 0 0;
+  background: var(--grey-light);
+  transition: all .3s;
 }
-.summary-header .field {
-  flex:1;
-  display:flex;
-  flex-direction:column;
+.step.completed {
+  background: var(--orange);
+  color: #fff;
+  border-top-color: var(--orange);
 }
-.summary-header label {
-  font-size:13px;
-  margin-bottom:4px;
+
+/* Lignes de configuration */
+.config-lines {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 16px;
 }
-.summary-header input[type=number] {
-  width:100%;
-  padding:4px;
-  border:1px solid var(--grey-med);
-  border-radius:2px;
-  text-align:center;
+.config-lines th {
+  background: var(--grey-light);
+  padding: 8px;
+  text-align: center;
+  font-weight: 500;
 }
-.field-value {
-  padding:4px;
-  border:1px solid var(--grey-med);
-  border-radius:2px;
-  text-align:center;
-  background:var(--white);
+.config-lines td {
+  padding: 8px;
+  border: 1px solid var(--grey-med);
+  text-align: center;
 }
-table {
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
-}
-table th,
-table td {
-  border:1px solid var(--grey-med);
-  padding:4px;
-  text-align:center;
+
+/* Responsive */
+@media (max-width: 768px) {
+  .order-meta { flex-direction: column; }
+  .orders-table, .config-lines { font-size: 12px; }
 }
