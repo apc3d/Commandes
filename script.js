@@ -10,9 +10,52 @@ const orders = [
     total: 136.38,
     details: { piecesPrice:133.76, discount:-13.38, shippingCost:16.00, vat:27.28 },
     configs: [
-      { id:'CFG-001', qty:16, techno:'Multi Jet Fusion', material:'TPU 90A-01', finish:'Normale', delay:'Standard', unitPrice:8.36, totalPrice:133.76 },
-      { id:'CFG-002', qty:5,  techno:'FDM', material:'PLA', finish:'Brut',    delay:'Eco',      unitPrice:12.00, totalPrice:60.00   },
-      { id:'CFG-003', qty:2,  techno:'SLA', material:'Résine', finish:'Poli',   delay:'Fast',     unitPrice:45.00, totalPrice:90.00   }
+      // Chaque objet doit contenir maintenant toutes les clés utilisées ci-dessous
+      {
+        imageUrl:      'https://via.placeholder.com/60', 
+        id:            'CFG-001',
+        techno:        'Multi Jet Fusion',
+        material:      'TPU 90A-01',
+        finish:        'Normale',
+        color:         'Gris',
+        insertsCount:  2,
+        delay:         'Standard',
+        controlFile:   true,
+        keepOrientation: false,
+        qty:           16,
+        unitPrice:     8.36,
+        totalPrice:    133.76
+      },
+      {
+        imageUrl:      'https://via.placeholder.com/60',
+        id:            'CFG-002',
+        techno:        'FDM',
+        material:      'PLA',
+        finish:        'Brut',
+        color:         'Blanc',
+        insertsCount:  0,
+        delay:         'Eco',
+        controlFile:   false,
+        keepOrientation: true,
+        qty:           5,
+        unitPrice:     12.00,
+        totalPrice:    60.00
+      },
+      {
+        imageUrl:      'https://via.placeholder.com/60',
+        id:            'CFG-003',
+        techno:        'SLA',
+        material:      'Résine',
+        finish:        'Poli',
+        color:         'Noir',
+        insertsCount:  1,
+        delay:         'Fast',
+        controlFile:   true,
+        keepOrientation: true,
+        qty:           2,
+        unitPrice:     45.00,
+        totalPrice:    90.00
+      }
     ]
   },
   {
@@ -25,7 +68,21 @@ const orders = [
     total: 66.00,
     details: { piecesPrice:66.00, discount:0, shippingCost:0, vat:13.20 },
     configs: [
-      { id:'CFG-004', qty:2, techno:'FDM', material:'PLA', finish:'Brut', delay:'Fast', unitPrice:33.00, totalPrice:66.00 }
+      {
+        imageUrl:      'https://via.placeholder.com/60',
+        id:            'CFG-004',
+        techno:        'FDM',
+        material:      'PLA',
+        finish:        'Brut',
+        color:         'Noir',
+        insertsCount:  3,
+        delay:         'Fast',
+        controlFile:   false,
+        keepOrientation: false,
+        qty:           2,
+        unitPrice:     33.00,
+        totalPrice:    66.00
+      }
     ]
   }
 ];
@@ -50,7 +107,6 @@ window.addEventListener('DOMContentLoaded', () => {
     tbody.appendChild(tr);
   });
 
-  // Retour à la liste
   document.getElementById('backToList').addEventListener('click', e => {
     e.preventDefault();
     toggleView('list');
@@ -76,18 +132,27 @@ function showDetail(i) {
     );
   });
 
-  // Lignes de config
+  // Lignes de config – toutes les infos conservées
   const cfgBody = document.getElementById('configLinesBody');
   cfgBody.innerHTML = '';
   o.configs.forEach(c => {
     cfgBody.insertAdjacentHTML('beforeend', `
       <tr>
+        <td>
+          <img src="${c.imageUrl}"
+               alt="aperçu ${c.id}"
+               style="max-height:60px; object-fit:contain;" />
+        </td>
         <td>${c.id}</td>
-        <td>${c.qty}</td>
         <td>${c.techno}</td>
         <td>${c.material}</td>
         <td>${c.finish}</td>
+        <td>${c.color}</td>
+        <td>${c.insertsCount}</td>
         <td>${c.delay}</td>
+        <td>${c.controlFile ? 'Oui' : 'Non'}</td>
+        <td>${c.keepOrientation ? 'Oui' : 'Non'}</td>
+        <td>${c.qty}</td>
         <td>${c.unitPrice.toFixed(2)}</td>
         <td>${c.totalPrice.toFixed(2)}</td>
       </tr>
