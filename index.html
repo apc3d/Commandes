@@ -3,64 +3,118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mes commandes – APC3D</title>
+  <title>Détail de commande – APC3D</title>
   <!-- styles globaux -->
   <link rel="stylesheet" href="../style.css" />
-  <!-- styles spécifiques à cette page -->
+  <!-- styles de la page commandes -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Entête avec retour au dashboard -->
-  <header class="cmd-header">
-    <a href="../index.html" class="btn-back">← Retour au dashboard</a>
-    <h1>Commandes récentes et en cours</h1>
-  </header>
+  <!-- Bouton retour + titre -->
+  <button id="backToList" class="btn-back">← Retour aux commandes</button>
+  <h1>Commande <span id="detailOrderNumber"></span></h1>
 
-  <main class="cmd-main">
-    <!-- 1) LISTE DES COMMANDES -->
-    <section id="orders-list" class="orders-list">
-      <table class="orders-table">
-        <thead>
-          <tr>
-            <th>Numéro</th>
-            <th>Date</th>
-            <th>Prix</th>
-            <th>État</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="ordersTableBody">
-          <!-- <script.js> injecte ici les lignes -->
-        </tbody>
-      </table>
-    </section>
+  <!-- Méta -->
+  <div class="order-meta">
+    <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
+    <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
+    <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
+    <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
+  </div>
 
-    <!-- 2) DETAIL D’UNE COMMANDE (caché au départ) -->
-    <section id="order-detail" class="order-detail hidden">
-      <button id="backToList" class="btn-back">← Retour aux commandes</button>
-      <h2>Commande <span id="detailOrderNumber"></span></h2>
+  <!-- Barre de statut -->
+  <div class="order-status">
+    <div class="step" data-step="validated">Validée</div>
+    <div class="step" data-step="preparation">Préparation</div>
+    <div class="step" data-step="production">Fabrication</div>
+    <div class="step" data-step="shipped">Expédiée</div>
+    <div class="step" data-step="delivered">Livrée</div>
+  </div>
 
-      <div class="order-meta">
-        <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
-        <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
-        <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
-        <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
+  <!-- Contenu de la commande -->
+  <h2>Contenu de la commande</h2>
+  <div id="config-detail-container"></div>
+
+  <!-- Template “panel-wrapper” du configurateur -->
+  <template id="config-template">
+    <div class="panel-wrapper">
+      <div class="panel">
+        <!-- Aperçu et ref -->
+        <div class="col preview">
+          <div class="viewer"><!-- Three.js renderer injecté ici --></div>
+          <p class="ref">Ref : <span class="filename"></span></p>
+          <p class="dims">Dimensions :<br>…</p>
+        </div>
+        <!-- Sélections -->
+        <div class="col settings">
+          <div class="field">
+            <label>Technologie</label>
+            <select name="techno">
+              <option>FDM</option><option>SLA</option><option>SLS</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Matériaux</label>
+            <select name="material">
+              <option>PLA</option><option>ABS</option><option>PETG</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Finition</label>
+            <select name="finish">
+              <option>Sélectionnez</option><option>Brut</option><option>Poli</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Couleur</label>
+            <select name="color">
+              <option>Sélectionnez</option><option>Blanc</option><option>Noir</option>
+            </select>
+          </div>
+        </div>
+        <!-- Extras -->
+        <div class="col extras">
+          <div class="field">
+            <label>Inserts / taraudages manuels</label>
+            <div class="slider-container">
+              <input type="range" class="inserts-range" min="0" max="50" value="0">
+              <span class="inserts-count">0</span>
+            </div>
+          </div>
+          <div class="field checks">
+            <label><input type="checkbox"> Contrôle du fichier par un expert</label>
+            <label><input type="checkbox"> Conserver l’orientation originale</label>
+          </div>
+          <div class="field">
+            <label>Délai de livraison</label>
+            <div class="opts">
+              <div class="opt" data-type="fast">Fast</div>
+              <div class="opt" data-type="standard">Standard</div>
+              <div class="opt" data-type="eco">Eco</div>
+            </div>
+          </div>
+        </div>
+        <!-- Récap prix/quantité -->
+        <div class="col summary">
+          <div class="summary-header">
+            <div class="field qty-order">
+              <label>Quantité</label>
+              <input type="number" class="quantity" value="1" min="1">
+            </div>
+            <div class="field">
+              <label>Unité (EUR)</label>
+              <div class="unit-price">0.00</div>
+            </div>
+            <div class="field">
+              <label>Total (EUR)</label>
+              <div class="total-price">0.00</div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="order-status">
-        <div class="step" data-step="validated">Validée</div>
-        <div class="step" data-step="preparation">Préparation</div>
-        <div class="step" data-step="production">Fabrication</div>
-        <div class="step" data-step="shipped">Expédiée</div>
-        <div class="step" data-step="delivered">Livrée</div>
-      </div>
-
-      <h3>Contenu de la commande</h3>
-      <!-- On remplace le tableau par un conteneur de blocs de config -->
-      <div id="config-detail-container"></div>
-    </section>
-  </main>
+    </div>
+  </template>
 
   <script src="script.js"></script>
 </body>
