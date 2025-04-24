@@ -38,28 +38,32 @@
         <div class="col preview">
           <div class="viewer"></div>
           <p class="ref">Ref : <span class="filename"></span></p>
-          <p class="dims">…</p>
+          <p class="dims"></p>
         </div>
-        <!-- Col 2 : Settings (remplacé en dur par script) -->
+        <!-- Col 2 : Sélections -->
         <div class="col settings">
           <div class="field">
-            <label>Technologie</label>
-            <select name="techno"><option>FDM</option><option>SLA</option><option>SLS</option></select>
+            <select name="techno">
+              <option>FDM</option><option>SLA</option><option>SLS</option>
+            </select>
           </div>
           <div class="field">
-            <label>Matériaux</label>
-            <select name="material"><option>PLA</option><option>ABS</option><option>PETG</option></select>
+            <select name="material">
+              <option>PLA</option><option>ABS</option><option>PETG</option>
+            </select>
           </div>
           <div class="field">
-            <label>Finition</label>
-            <select name="finish"><option>Sélectionnez</option><option>Brut</option><option>Poli</option></select>
+            <select name="finish">
+              <option>Sélectionnez</option><option>Brut</option><option>Poli</option>
+            </select>
           </div>
           <div class="field">
-            <label>Couleur</label>
-            <select name="color"><option>Sélectionnez</option><option>Blanc</option><option>Noir</option></select>
+            <select name="color">
+              <option>Sélectionnez</option><option>Blanc</option><option>Noir</option>
+            </select>
           </div>
         </div>
-        <!-- Col 3 : Extras (inchangé) -->
+        <!-- Col 3 : Extras -->
         <div class="col extras">
           <div class="field">
             <label>Inserts / taraudages manuels</label>
@@ -81,19 +85,16 @@
             <label><input type="checkbox" /> Conserver l'orientation originale</label>
           </div>
         </div>
-        <!-- Col 4 : Récap tarifs (mini‐tableau supprimé) -->
+        <!-- Col 4 : Récap tarifs -->
         <div class="col summary">
           <div class="summary-header">
             <div class="field qty-order">
-              <label>Quantité</label>
               <input type="number" class="quantity" value="1" min="1" />
             </div>
             <div class="field">
-              <label>Unité (EUR)</label>
               <div class="unit-price">0.00</div>
             </div>
             <div class="field">
-              <label>Total (EUR)</label>
               <div class="total-price">0.00</div>
             </div>
           </div>
