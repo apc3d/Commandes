@@ -4,18 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Détail de commande – APC3D</title>
-  <!-- styles globaux -->
   <link rel="stylesheet" href="../style.css" />
-  <!-- styles de la page commandes -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Bouton retour + titre -->
   <button id="backToList" class="btn-back">← Retour aux commandes</button>
   <h1>Commande <span id="detailOrderNumber"></span></h1>
 
-  <!-- Méta -->
   <div class="order-meta">
     <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
     <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
@@ -23,7 +19,6 @@
     <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
   </div>
 
-  <!-- Barre de statut -->
   <div class="order-status">
     <div class="step" data-step="validated">Validée</div>
     <div class="step" data-step="preparation">Préparation</div>
@@ -32,21 +27,22 @@
     <div class="step" data-step="delivered">Livrée</div>
   </div>
 
-  <!-- Contenu de la commande -->
   <h2>Contenu de la commande</h2>
   <div id="config-detail-container"></div>
 
-  <!-- Template “panel-wrapper” du configurateur -->
+  <!-- ============================= -->
+  <!-- TEMPLATE DE CONFIGURATEUR     -->
+  <!-- ============================= -->
   <template id="config-template">
     <div class="panel-wrapper">
       <div class="panel">
-        <!-- Aperçu et ref -->
+        <!-- Col 1 : Aperçu 3D -->
         <div class="col preview">
-          <div class="viewer"><!-- Three.js renderer injecté ici --></div>
+          <div class="viewer"></div>
           <p class="ref">Ref : <span class="filename"></span></p>
-          <p class="dims">Dimensions :<br>…</p>
+          <p class="dims"></p>
         </div>
-        <!-- Sélections -->
+        <!-- Col 2 : Sélections -->
         <div class="col settings">
           <div class="field">
             <label>Technologie</label>
@@ -73,34 +69,34 @@
             </select>
           </div>
         </div>
-        <!-- Extras -->
+        <!-- Col 3 : Extras -->
         <div class="col extras">
           <div class="field">
             <label>Inserts / taraudages manuels</label>
             <div class="slider-container">
-              <input type="range" class="inserts-range" min="0" max="50" value="0">
+              <input type="range" class="inserts-range" min="0" max="50" value="0" />
               <span class="inserts-count">0</span>
             </div>
           </div>
-          <div class="field checks">
-            <label><input type="checkbox"> Contrôle du fichier par un expert</label>
-            <label><input type="checkbox"> Conserver l’orientation originale</label>
-          </div>
-          <div class="field">
+          <div class="field delivery">
             <label>Délai de livraison</label>
             <div class="opts">
-              <div class="opt" data-type="fast">Fast</div>
-              <div class="opt" data-type="standard">Standard</div>
-              <div class="opt" data-type="eco">Eco</div>
+              <div class="opt" data-type="fast">Fast<br /><span class="opt-date">–</span></div>
+              <div class="opt" data-type="standard">Standard<br /><span class="opt-date">–</span></div>
+              <div class="opt" data-type="eco">Eco<br /><span class="opt-date">–</span></div>
             </div>
           </div>
+          <div class="field checks">
+            <label><input type="checkbox" /> Contrôle du fichier par un expert</label>
+            <label><input type="checkbox" /> Conserver l'orientation originale</label>
+          </div>
         </div>
-        <!-- Récap prix/quantité -->
+        <!-- Col 4 : Récap tarifs -->
         <div class="col summary">
           <div class="summary-header">
             <div class="field qty-order">
               <label>Quantité</label>
-              <input type="number" class="quantity" value="1" min="1">
+              <input type="number" class="quantity" value="1" min="1" />
             </div>
             <div class="field">
               <label>Unité (EUR)</label>
@@ -111,8 +107,10 @@
               <div class="total-price">0.00</div>
             </div>
           </div>
+          <!-- plus de mini-tableau -->
         </div>
       </div>
+      <!-- plus de toolbar -->
     </div>
   </template>
 
