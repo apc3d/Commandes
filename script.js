@@ -10,7 +10,6 @@ const orders = [
     total: 136.38,
     details: { piecesPrice:133.76, discount:-13.38, shippingCost:16.00, vat:27.28 },
     configs: [
-      // Chaque objet doit contenir maintenant toutes les clés utilisées ci-dessous
       {
         imageUrl:      'https://via.placeholder.com/60', 
         id:            'CFG-001',
@@ -21,10 +20,14 @@ const orders = [
         insertsCount:  2,
         delay:         'Standard',
         controlFile:   true,
-        keepOrientation: false,
+        keepOrientation:false,
         qty:           16,
         unitPrice:     8.36,
-        totalPrice:    133.76
+        totalPrice:    133.76,
+        dimX:          120.00,
+        dimY:          65.00,
+        dimZ:          10.00,
+        volume:        45.22
       },
       {
         imageUrl:      'https://via.placeholder.com/60',
@@ -36,10 +39,14 @@ const orders = [
         insertsCount:  0,
         delay:         'Eco',
         controlFile:   false,
-        keepOrientation: true,
+        keepOrientation:true,
         qty:           5,
         unitPrice:     12.00,
-        totalPrice:    60.00
+        totalPrice:    60.00,
+        dimX:          120.00,
+        dimY:          65.00,
+        dimZ:          10.00,
+        volume:        45.22
       },
       {
         imageUrl:      'https://via.placeholder.com/60',
@@ -51,10 +58,14 @@ const orders = [
         insertsCount:  1,
         delay:         'Fast',
         controlFile:   true,
-        keepOrientation: true,
+        keepOrientation:true,
         qty:           2,
         unitPrice:     45.00,
-        totalPrice:    90.00
+        totalPrice:    90.00,
+        dimX:          120.00,
+        dimY:          65.00,
+        dimZ:          10.00,
+        volume:        45.22
       }
     ]
   },
@@ -78,17 +89,21 @@ const orders = [
         insertsCount:  3,
         delay:         'Fast',
         controlFile:   false,
-        keepOrientation: false,
+        keepOrientation:false,
         qty:           2,
         unitPrice:     33.00,
-        totalPrice:    66.00
+        totalPrice:    66.00,
+        dimX:          120.00,
+        dimY:          65.00,
+        dimZ:          10.00,
+        volume:        45.22
       }
     ]
   }
 ];
 const steps = ['validated','preparation','production','shipped','delivered'];
 
-// ========== Initialisation ==========
+// ========== Initialisation de la liste ==========
 window.addEventListener('DOMContentLoaded', () => {
   const tbody = document.getElementById('ordersTableBody');
   orders.forEach((o,i) => {
@@ -113,7 +128,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ========== Affichage du détail inline ==========
+// ========== Affichage du détail ==========
 function showDetail(i) {
   const o = orders[i];
   toggleView('detail');
@@ -132,35 +147,56 @@ function showDetail(i) {
     );
   });
 
-  // Lignes de config – toutes les infos conservées
-  const cfgBody = document.getElementById('configLinesBody');
-  cfgBody.innerHTML = '';
+  // Conteneur de configs
+  const detailContainer = document.getElementById('config-detail-container');
+  detailContainer.innerHTML = '';
+
   o.configs.forEach(c => {
-    cfgBody.insertAdjacentHTML('beforeend', `
-      <tr>
-        <td>
-          <img src="${c.imageUrl}"
-               alt="aperçu ${c.id}"
-               style="max-height:60px; object-fit:contain;" />
-        </td>
-        <td>${c.id}</td>
-        <td>${c.techno}</td>
-        <td>${c.material}</td>
-        <td>${c.finish}</td>
-        <td>${c.color}</td>
-        <td>${c.insertsCount}</td>
-        <td>${c.delay}</td>
-        <td>${c.controlFile ? 'Oui' : 'Non'}</td>
-        <td>${c.keepOrientation ? 'Oui' : 'Non'}</td>
-        <td>${c.qty}</td>
-        <td>${c.unitPrice.toFixed(2)}</td>
-        <td>${c.totalPrice.toFixed(2)}</td>
-      </tr>
-    `);
+    // on clone le template de configuration (depuis la page de config initiale)
+    const tpl = document.getElementById('config-template');
+    const clone = tpl.content.cloneNode(true);
+
+    // on remplit les valeurs
+    clone.querySelector('.viewer img')?.setAttribute('src', c.imageUrl);
+    clone.querySelector('.filename').textContent        = c.id;
+    clone.querySelector('.dims').innerHTML = `
+      Dimensions :<br>
+      ${c.dimX.toFixed(2)} × ${c.dimY.toFixed(2)} × ${c.dimZ.toFixed(2)} mm<br>
+      Volume : ${c.volume.toFixed(2)} cm³
+    `;
+    clone.querySelector('select[name="techno"]').value      = c.techno;
+    clone.querySelector('select[name="material"]').value    = c.material;
+    clone.querySelector('select[name="finish"]').value      = c.finish;
+    clone.querySelector('select[name="color"]').value       = c.color;
+    clone.querySelector('.inserts-range').value            = c.insertsCount;
+    clone.querySelector('.inserts-count').textContent      = c.insertsCount;
+    clone.querySelector(`.opt[data-type="${c.delay.toLowerCase()}"]`).classList.add('active');
+    clone.querySelector('.quantity').value                 = c.qty;
+    clone.querySelector('.unit-price').textContent         = c.unitPrice.toFixed(2);
+    clone.querySelector('.total-price').textContent        = c.totalPrice.toFixed(2);
+    clone.querySelectorAll('.checks input')[0].checked     = c.controlFile;
+    clone.querySelectorAll('.checks input')[1].checked     = c.keepOrientation;
+
+    // 1) on supprime la barre grise du bas
+    const toolbar = clone.querySelector('.toolbar');
+    toolbar && toolbar.remove();
+
+    // 2) on supprime le mini‐tableau des prix
+    const priceTable = clone.querySelector('.summary table');
+    priceTable && priceTable.remove();
+
+    // 3) on fige tous les champs
+    clone.querySelectorAll('select, input, .inserts-range, .opt').forEach(el => {
+      el.setAttribute('disabled','');
+      el.style.pointerEvents = 'none';
+      el.style.opacity = '0.6';
+    });
+
+    detailContainer.appendChild(clone);
   });
 }
 
-// Show/Hide list vs detail
+// bascule liste / détail
 function toggleView(view) {
   document.getElementById('orders-list').classList.toggle('hidden', view === 'detail');
   document.getElementById('order-detail').classList.toggle('hidden', view !== 'detail');
