@@ -6,107 +6,114 @@
   --white:      #FFFFFF;
   --bg:         #F9F9F9;
 }
+
 body {
   font-family:'Segoe UI',sans-serif;
   background:var(--bg);
   margin:0; padding:20px;
 }
+
 .btn-back {
   color:var(--orange);
   text-decoration:none;
   font-weight:600;
-  display:inline-block;
   margin-bottom:12px;
+  display:inline-block;
 }
+
 .order-meta {
   display:flex; gap:24px;
   margin-bottom:12px;
 }
-.order-meta div { font-size:14px; }
+
 .order-status {
-  display:flex; gap:8px; margin-bottom:16px;
+  display:flex; gap:8px;
+  margin-bottom:16px;
 }
+
 .step {
   flex:1; text-align:center; padding:8px 0;
   background:var(--grey-light); color:var(--grey-dark);
   border-radius:4px; font-weight:500; font-size:13px;
 }
+
 .step.completed {
   background:var(--orange); color:#fff;
 }
 
-/* conteneur de configs */
+/* Conteneur des configs */
 #config-detail-container {
   display:flex;
   flex-direction:column;
 }
 
-/* panel-wrapper et panel (du configurateur) */
+/* Panel & preview inchangés (hauteur réduite si besoin) */
 .panel-wrapper {
   background:var(--white);
   border:1px solid var(--grey-med);
   border-radius:4px;
-  margin-bottom:16px;           /* réduit */
+  margin-bottom:12px; /* un peu plus serré */
 }
+
 .panel {
   display:grid;
   grid-template-columns:0.8fr 1fr 1fr 1fr;
-  gap:12px;                     /* réduit */
-  padding:12px;                 /* réduit */
+  gap:12px;
+  padding:12px;
 }
 
-/* Col preview */
+/* Col 1 */
 .viewer {
   background:#fff;
   border:1px solid var(--grey-med);
-  height:150px;                 /* réduit */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:4px;
+  height:150px;
+  display:flex; align-items:center; justify-content:center;
 }
-.ref,
-.dims {
+
+.ref {
   font-size:12px;
   margin:4px 0;
-  line-height:1.2;
 }
 
-/* selects / fields */
-.settings .field,
-.extras .field,
-.summary .field {
-  margin-bottom:12px;
+/* Col 2 : setting-value en noir */
+.setting-value {
+  font-size:13px;
+  color:var(--grey-dark);
+  margin:4px 0;
 }
-.field label { font-size:13px; margin-bottom:4px; }
-select { width:100%; padding:4px; }
 
-/* inserts */
+/* Col 3 */
 .slider-container { display:flex; align-items:center; gap:6px; }
 .inserts-range { flex:1; }
 
-/* opts */
 .opts { display:flex; gap:4px; }
 .opt {
   flex:1; text-align:center; font-size:12px;
   padding:4px; border:1px solid var(--grey-med);
   border-radius:2px; cursor:default;
-  min-height:40px;
+}
+.opt.active {
+  background:var(--orange);
+  color:#fff;
+  border-color:var(--orange);
 }
 
-/* checks */
 .checks { display:flex; flex-direction:column; gap:4px; }
 .checks input { margin-right:6px; }
 
-/* summary header */
+/* Col 4 : empilement vertical */
 .summary-header {
-  display:flex; gap:12px; margin-bottom:0;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:8px;
 }
-.summary-header .field { flex:1; }
-.summary-header label { font-size:13px; }
-.summary-header input {
-  width:100%; padding:4px; text-align:center;
+
+.summary-header .field {
+  width:100%;
 }
+
+/* Prix */
 .unit-price,
 .total-price {
   background:var(--orange);
@@ -125,8 +132,8 @@ input[disabled],
   opacity:0.6;
 }
 
-/* responsive */
-@media (max-width:768px) {
-  .order-meta { flex-direction:column; }
+/* Responsive */
+@media(max-width:768px){
   .panel { grid-template-columns:1fr; }
+  .order-meta{flex-direction:column;}
 }
