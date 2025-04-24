@@ -3,129 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Configurateur 3D – APC3D</title>
+  <title>Mes commandes – APC3D</title>
+  <!-- (si nécessaire) lien vers vos styles globaux -->
+  <link rel="stylesheet" href="../style.css">
+  <!-- Styles spécifiques à la page commandes -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Bandeau de progression -->
-  <ul class="tabs">
-    <li class="tab active">Configuration</li>
-    <li class="tab">Validation</li>
-    <li class="tab">Paiement</li>
-    <li class="tab">Commande terminée</li>
-  </ul>
+  <!-- Entête avec retour au dashboard -->
+  <header class="cmd-header">
+    <a href="../index.html" class="btn-back">← Retour au dashboard</a>
+    <h1>Commandes récentes et en cours</h1>
+  </header>
 
-  <!-- Panel de configuration -->
-  <div class="panel-wrapper">
-    <div class="panel">
-      <!-- Colonne 1 : Aperçu + upload -->
-      <div class="col preview">
-        <div class="box">
-          <img id="preview-img" src="placeholder-3d.svg" alt="Aperçu 3D">
-        </div>
-        <p class="dims">
-          Dimensions :<br>
-          <span id="dimX">120.00</span> × <span id="dimY">65.00</span> × <span id="dimZ">10.00</span> mm<br>
-          Volume : <span id="vol">45.22</span> cm³
-        </p>
-        <input type="file" id="upload-3d" accept=".stl,.step,.stp">
+  <main class="cmd-main">
+    <!-- 1) LISTE DES COMMANDES -->
+    <section id="orders-list" class="orders-list">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Numéro</th>
+            <th>Date</th>
+            <th>Prix</th>
+            <th>État</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTableBody">
+          <!-- <script.js> injecte ici les lignes -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 2) DETAIL D’UNE COMMANDE (caché au départ) -->
+    <section id="order-detail" class="order-detail hidden">
+      <button id="backToList" class="btn-back">← Retour aux commandes</button>
+      <h2>Commande <span id="detailOrderNumber"></span></h2>
+
+      <div class="order-meta">
+        <div><strong>Date :</strong> <span id="detailOrderDate"></span></div>
+        <div><strong>Délai de livraison :</strong> <span id="detailDeliveryDate"></span></div>
+        <div><strong>Facture :</strong> <a id="invoiceLink" href="#" target="_blank">Télécharger</a></div>
+        <div><strong>Suivi colis :</strong> <a id="trackingLink" href="#" target="_blank">Voir le suivi</a></div>
       </div>
 
-      <!-- Colonne 2 : Sélections -->
-      <div class="col settings">
-        <div class="field">
-          <label for="techno">Technologie</label>
-          <select id="techno">
-            <option>FDM</option>
-            <option>SLA</option>
-            <option>SLS</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="material">Matériau</label>
-          <select id="material">
-            <option>PLA</option>
-            <option>ABS</option>
-            <option>PETG</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="finish">Finition</label>
-          <select id="finish">
-            <option disabled selected>Sélectionnez</option>
-            <option>Brut</option>
-            <option>Poli</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="color">Couleur</label>
-          <select id="color">
-            <option disabled selected>Sélectionnez</option>
-            <option>Blanc</option>
-            <option>Noir</option>
-          </select>
-        </div>
+      <div class="order-status">
+        <div class="step" data-step="validated">Validée</div>
+        <div class="step" data-step="preparation">Préparation</div>
+        <div class="step" data-step="production">Fabrication</div>
+        <div class="step" data-step="shipped">Expédiée</div>
+        <div class="step" data-step="delivered">Livrée</div>
       </div>
 
-      <!-- Colonne 3 : Inserts / délai / options -->
-      <div class="col extras">
-        <div class="field">
-          <label for="insertsRange">Inserts / taraudages</label>
-          <input type="range" id="insertsRange" min="0" max="50" value="0">
-          <span id="insertsCount">0</span>
-        </div>
-        <div class="field delivery">
-          <label>Délai de livraison</label>
-          <div class="opts">
-            <div class="opt" data-type="fast">
-              Fast<br><span>Mardi 29 Avril</span>
-            </div>
-            <div class="opt active" data-type="standard">
-              Standard<br><span>Mardi 29 Avril</span>
-            </div>
-            <div class="opt" data-type="eco">
-              Eco<br><span>Mardi 29 Avril</span>
-            </div>
-          </div>
-        </div>
-        <div class="checks">
-          <label><input type="checkbox" id="check-expert"> Contrôle du fichier par un expert</label>
-          <label><input type="checkbox" id="check-orient"> Conserver l'orientation originale</label>
-        </div>
-      </div>
-
-      <!-- Colonne 4 : Récapitulatif (fond blanc) -->
-      <div class="col summary">
-        <div class="summary-header">
-          <div class="field qty-order">
-            <label for="quantity">Quantité</label>
-            <input type="number" id="quantity" value="1" min="1">
-          </div>
-          <div class="field">
-            <label>Unité (EUR)</label>
-            <div class="field-value" id="unit-price">198.41 €</div>
-          </div>
-          <div class="field">
-            <label>Total (EUR)</label>
-            <div class="field-value" id="total-price">198.41 €</div>
-          </div>
-        </div>
-        <table>
-          <thead>
-            <tr><th>Quantité</th><th>Unité (€)</th><th>Total (€)</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>198.41</td><td>198.41</td></tr>
-            <tr><td>2</td><td>196.80</td><td>393.60</td></tr>
-            <tr><td>3</td><td>195.98</td><td>587.94</td></tr>
-            <tr><td>4</td><td>195.46</td><td>781.84</td></tr>
-            <tr><td>5</td><td>195.07</td><td>975.35</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+      <h3>Contenu de la commande</h3>
+      <table class="config-lines">
+        <thead>
+          <tr>
+            <th>Réf</th><th>Qté</th><th>Techno</th><th>Matériau</th>
+            <th>Finition</th><th>Délais</th><th>Prix U. (€)</th><th>Total (€)</th>
+          </tr>
+        </thead>
+        <tbody id="configLinesBody">
+          <!-- <script.js> injecte ici -->
+        </tbody>
+      </table>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
