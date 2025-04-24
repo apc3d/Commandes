@@ -1,59 +1,132 @@
-/* styles spécifiques à la page commandes */
 :root {
-  --orange:    #FFA500;
-  --grey-light:#EEEEEE;
-  --grey-med:  #CCCCCC;
-  --grey-dark: #333333;
-  --white:     #FFFFFF;
-  --bg:        #F9F9F9;
+  --orange:     #FFA500;
+  --grey-light: #EEEEEE;
+  --grey-med:   #CCCCCC;
+  --grey-dark:  #333333;
+  --white:      #FFFFFF;
+  --bg:         #F9F9F9;
 }
 body {
   font-family:'Segoe UI',sans-serif;
   background:var(--bg);
-  margin:0;
-  padding:20px;
+  margin:0; padding:20px;
 }
 .btn-back {
-  display:inline-block;
-  margin-bottom:16px;
   color:var(--orange);
   text-decoration:none;
   font-weight:600;
+  display:inline-block;
+  margin-bottom:12px;
 }
-.order-meta { display:flex; gap:24px; margin-bottom:16px; }
+.order-meta {
+  display:flex; gap:24px;
+  margin-bottom:12px;
+}
 .order-meta div { font-size:14px; }
-.order-meta a { color:var(--orange); text-decoration:none; }
-.order-status { display:flex; gap:8px; margin-bottom:24px; }
+.order-status {
+  display:flex; gap:8px; margin-bottom:16px;
+}
 .step {
-  flex:1; text-align:center; padding:12px 0;
+  flex:1; text-align:center; padding:8px 0;
   background:var(--grey-light); color:var(--grey-dark);
-  border-radius:4px; font-weight:500;
+  border-radius:4px; font-weight:500; font-size:13px;
 }
 .step.completed {
   background:var(--orange); color:#fff;
 }
-/* conteneur des configs */
-#config-detail-container { display:flex; flex-direction:column; gap:24px; }
-/* on réutilise le CSS du configurateur */
+
+/* conteneur de configs */
+#config-detail-container {
+  display:flex;
+  flex-direction:column;
+}
+
+/* panel-wrapper et panel (du configurateur) */
 .panel-wrapper {
+  background:var(--white);
   border:1px solid var(--grey-med);
   border-radius:4px;
-  background:var(--white);
+  margin-bottom:16px;           /* réduit */
 }
-.panel { display:grid; grid-template-columns:0.8fr 1fr 1fr 1fr; gap:16px; padding:16px; }
-.col { display:flex; flex-direction:column; }
-.viewer { background:#fff; border:1px solid var(--grey-med); height:120px; display:flex; align-items:center; justify-content:center; }
-.ref, .dims { font-size:12px; margin:4px 0; }
-.settings .field, .extras .field, .summary .field { margin-bottom:12px; }
-.summary { background:var(--grey-light); padding:8px; border-radius:4px; }
-.summary-header { display:flex; gap:12px; }
+.panel {
+  display:grid;
+  grid-template-columns:0.8fr 1fr 1fr 1fr;
+  gap:12px;                     /* réduit */
+  padding:12px;                 /* réduit */
+}
+
+/* Col preview */
+.viewer {
+  background:#fff;
+  border:1px solid var(--grey-med);
+  height:150px;                 /* réduit */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:4px;
+}
+.ref,
+.dims {
+  font-size:12px;
+  margin:4px 0;
+  line-height:1.2;
+}
+
+/* selects / fields */
+.settings .field,
+.extras .field,
+.summary .field {
+  margin-bottom:12px;
+}
+.field label { font-size:13px; margin-bottom:4px; }
+select { width:100%; padding:4px; }
+
+/* inserts */
+.slider-container { display:flex; align-items:center; gap:6px; }
+.inserts-range { flex:1; }
+
+/* opts */
+.opts { display:flex; gap:4px; }
+.opt {
+  flex:1; text-align:center; font-size:12px;
+  padding:4px; border:1px solid var(--grey-med);
+  border-radius:2px; cursor:default;
+  min-height:40px;
+}
+
+/* checks */
+.checks { display:flex; flex-direction:column; gap:4px; }
+.checks input { margin-right:6px; }
+
+/* summary header */
+.summary-header {
+  display:flex; gap:12px; margin-bottom:0;
+}
 .summary-header .field { flex:1; }
-.summary-header .unit-price, .summary-header .total-price { background:var(--orange); color:#fff; padding:4px; border-radius:2px; text-align:center; }
-.select[disabled], input[disabled], .inserts-range[disabled], .opt[disabled] {
-  pointer-events:none; opacity:0.6;
+.summary-header label { font-size:13px; }
+.summary-header input {
+  width:100%; padding:4px; text-align:center;
 }
+.unit-price,
+.total-price {
+  background:var(--orange);
+  color:#fff;
+  padding:4px;
+  border-radius:2px;
+  text-align:center;
+}
+
+/* figer les champs */
+select[disabled],
+input[disabled],
+.inserts-range[disabled],
+.opt[disabled] {
+  pointer-events:none;
+  opacity:0.6;
+}
+
 /* responsive */
-@media(max-width:768px){
-  .order-meta{flex-direction:column;}
-  .panel{grid-template-columns:1fr;}
+@media (max-width:768px) {
+  .order-meta { flex-direction:column; }
+  .panel { grid-template-columns:1fr; }
 }
