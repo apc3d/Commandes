@@ -30,46 +30,36 @@
   <h2>Contenu de la commande</h2>
   <div id="config-detail-container"></div>
 
-  <!-- ============================= -->
-  <!-- TEMPLATE DE CONFIGURATEUR     -->
-  <!-- ============================= -->
+  <!-- TEMPLATE DE CONFIGURATEUR -->
   <template id="config-template">
     <div class="panel-wrapper">
       <div class="panel">
-        <!-- Col 1 : Aperçu 3D -->
+        <!-- Col 1 : Aperçu 3D + REF -->
         <div class="col preview">
           <div class="viewer"></div>
           <p class="ref">Ref : <span class="filename"></span></p>
-          <p class="dims"></p>
+          <p class="dims">…</p>
         </div>
-        <!-- Col 2 : Sélections -->
+        <!-- Col 2 : Settings (remplacé en dur par script) -->
         <div class="col settings">
           <div class="field">
             <label>Technologie</label>
-            <select name="techno">
-              <option>FDM</option><option>SLA</option><option>SLS</option>
-            </select>
+            <select name="techno"><option>FDM</option><option>SLA</option><option>SLS</option></select>
           </div>
           <div class="field">
             <label>Matériaux</label>
-            <select name="material">
-              <option>PLA</option><option>ABS</option><option>PETG</option>
-            </select>
+            <select name="material"><option>PLA</option><option>ABS</option><option>PETG</option></select>
           </div>
           <div class="field">
             <label>Finition</label>
-            <select name="finish">
-              <option>Sélectionnez</option><option>Brut</option><option>Poli</option>
-            </select>
+            <select name="finish"><option>Sélectionnez</option><option>Brut</option><option>Poli</option></select>
           </div>
           <div class="field">
             <label>Couleur</label>
-            <select name="color">
-              <option>Sélectionnez</option><option>Blanc</option><option>Noir</option>
-            </select>
+            <select name="color"><option>Sélectionnez</option><option>Blanc</option><option>Noir</option></select>
           </div>
         </div>
-        <!-- Col 3 : Extras -->
+        <!-- Col 3 : Extras (inchangé) -->
         <div class="col extras">
           <div class="field">
             <label>Inserts / taraudages manuels</label>
@@ -91,7 +81,7 @@
             <label><input type="checkbox" /> Conserver l'orientation originale</label>
           </div>
         </div>
-        <!-- Col 4 : Récap tarifs -->
+        <!-- Col 4 : Récap tarifs (mini‐tableau supprimé) -->
         <div class="col summary">
           <div class="summary-header">
             <div class="field qty-order">
@@ -107,10 +97,8 @@
               <div class="total-price">0.00</div>
             </div>
           </div>
-          <!-- plus de mini-tableau -->
         </div>
       </div>
-      <!-- plus de toolbar -->
     </div>
   </template>
 
