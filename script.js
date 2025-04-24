@@ -1,4 +1,4 @@
-// données factices avec plusieurs configs
+// données factices
 const orders = [
   {
     number: '5442315',
@@ -9,7 +9,7 @@ const orders = [
     status: 'delivered',
     configs: [
       {
-        imageUrl:      'https://via.placeholder.com/200x120?text=Aperçu+1',
+        imageUrl:      'https://via.placeholder.com/200x120',
         id:            'Carter_arrière_batterie_16A.stl',
         techno:        'FDM',
         material:      'PLA',
@@ -27,73 +27,31 @@ const orders = [
         dimZ:          10.00,
         volume:        45.22
       },
-      {
-        imageUrl:      'https://via.placeholder.com/200x120?text=Aperçu+2',
-        id:            'Cache_carte_distrib_v2.stl',
-        techno:        'SLA',
-        material:      'Résine',
-        finish:        'Poli',
-        color:         'Blanc',
-        insertsCount:  2,
-        delay:         'Fast',
-        controlFile:   true,
-        keepOrientation:false,
-        qty:           3,
-        unitPrice:     45.00,
-        totalPrice:    135.00,
-        dimX:          80.00,
-        dimY:          80.00,
-        dimZ:          15.00,
-        volume:        60.00
-      },
-      {
-        imageUrl:      'https://via.placeholder.com/200x120?text=Aperçu+3',
-        id:            'Support_pied_vintage.step',
-        techno:        'SLS',
-        material:      'Nylon',
-        finish:        'Normale',
-        color:         'Gris',
-        insertsCount:  1,
-        delay:         'Eco',
-        controlFile:   false,
-        keepOrientation:true,
-        qty:           2,
-        unitPrice:     60.50,
-        totalPrice:    121.00,
-        dimX:          50.00,
-        dimY:          100.00,
-        dimZ:          20.00,
-        volume:        80.00
-      }
+      // … ajoutez autant de configs que vous voulez …
     ]
   }
 ];
 const steps = ['validated','preparation','production','shipped','delivered'];
 
 window.addEventListener('DOMContentLoaded', () => {
-  // on affiche directement la 1ʳᵉ commande
   showDetail(0);
-  document.getElementById('backToList').addEventListener('click', e => {
-    e.preventDefault();
-    // ici, redirection vers la liste
-  });
+  document.getElementById('backToList').addEventListener('click', e => e.preventDefault());
 });
 
 function showDetail(i) {
   const o = orders[i];
-  // méta
+  // méta + statut (inchangés)
   document.getElementById('detailOrderNumber').textContent  = o.number;
   document.getElementById('detailOrderDate').textContent    = o.date;
   document.getElementById('detailDeliveryDate').textContent = o.deliveryDate;
   document.getElementById('invoiceLink').href               = o.invoiceUrl;
   document.getElementById('trackingLink').href              = o.trackingUrl;
-  // statut
   document.querySelectorAll('.step').forEach(el => {
     el.classList.toggle('completed',
       steps.indexOf(el.dataset.step) <= steps.indexOf(o.status)
     );
   });
-  // contenu
+
   const container = document.getElementById('config-detail-container');
   container.innerHTML = '';
   o.configs.forEach(c => {
@@ -106,19 +64,20 @@ function showDetail(i) {
                              alt="${c.id}"
                              style="max-width:100%;max-height:100%;">`;
 
-    // REF & dimensions
+    // Col 1 → ref + dimensions enlevées
     clone.querySelector('.filename').textContent = c.id;
-    clone.querySelector('.dims').innerHTML = `
-      Dimensions :<br>
-      ${c.dimX.toFixed(2)} × ${c.dimY.toFixed(2)} × ${c.dimZ.toFixed(2)} mm<br>
-      Volume : ${c.volume.toFixed(2)} cm³
+    clone.querySelector('.dims')?.remove();
+
+    // Col 2 → on remplace tout par des <p> noirs
+    const col2 = clone.querySelector('.settings');
+    col2.innerHTML = `
+      <p class="setting-value">${c.techno}</p>
+      <p class="setting-value">${c.material}</p>
+      <p class="setting-value">${c.finish}</p>
+      <p class="setting-value">${c.color}</p>
     `;
 
-    // Sélections
-    clone.querySelector('select[name="techno"]').value   = c.techno;
-    clone.querySelector('select[name="material"]').value = c.material;
-    clone.querySelector('select[name="finish"]').value   = c.finish;
-    clone.querySelector('select[name="color"]').value    = c.color;
+    // Col 3 → insert, cases, délai (inchangé, delay en orange naturellement)
 
     // Inserts
     clone.querySelector('.inserts-range').value       = c.insertsCount;
@@ -129,18 +88,19 @@ function showDetail(i) {
     checks[0].checked = c.controlFile;
     checks[1].checked = c.keepOrientation;
 
-    // Délais
+    // Délai
     clone.querySelector(`.opt[data-type="${c.delay.toLowerCase()}"]`)
          .classList.add('active');
-    // (optionnel : on pourrait remplir .opt-date si besoin)
 
-    // Quantité & prix
+    // Col 4 → quantité, unité, total empilés
     clone.querySelector('.quantity').value          = c.qty;
     clone.querySelector('.unit-price').textContent  = c.unitPrice.toFixed(2);
     clone.querySelector('.total-price').textContent = c.totalPrice.toFixed(2);
 
-    // On supprime barre grise et mini-tableau (déjà absents du template)
-    // On fige tout
+    // suppression toolbar (déjà absente) et mini‐tableau
+    clone.querySelector('.summary table')?.remove();
+
+    // figer tout
     clone.querySelectorAll('select, input, .inserts-range, .opt').forEach(el => {
       el.setAttribute('disabled','');
       el.style.pointerEvents = 'none';
